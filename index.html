@@ -6,15 +6,9 @@
   <title>KulaShield MCP</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: Inter, Arial, sans-serif;
@@ -25,15 +19,15 @@
 
     header {
       width: 100%;
-      padding: 26px 48px;
+      padding: 22px 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px dashed rgba(255,255,255,0.25);
+      border-bottom: 1px dashed rgba(255,255,255,0.22);
       position: fixed;
       top: 0;
-      z-index: 10;
-      background: rgba(8,13,24,0.82);
+      z-index: 20;
+      background: rgba(8,13,24,0.86);
       backdrop-filter: blur(18px);
     }
 
@@ -41,7 +35,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      font-size: 24px;
+      font-size: 23px;
       font-weight: 800;
     }
 
@@ -55,14 +49,15 @@
 
     nav {
       display: flex;
-      gap: 34px;
+      gap: 24px;
+      align-items: center;
     }
 
     nav a {
       color: #d7d9df;
       text-decoration: none;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .btn {
@@ -71,9 +66,9 @@
       cursor: pointer;
       padding: 13px 22px;
       border-radius: 999px;
-      font-weight: 700;
+      font-weight: 800;
       color: #05070d;
-      background: linear-gradient(135deg, #fff, #d4af37);
+      background: linear-gradient(135deg, #ffffff, #d4af37);
       box-shadow: 0 0 26px rgba(212,175,55,0.35);
       text-decoration: none;
     }
@@ -87,7 +82,7 @@
 
     .hero {
       min-height: 100vh;
-      padding: 170px 32px 90px;
+      padding: 165px 32px 90px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -98,16 +93,16 @@
 
     .orb {
       position: absolute;
-      width: 660px;
-      height: 660px;
+      width: 690px;
+      height: 690px;
       border-radius: 50%;
       background:
-        radial-gradient(circle, rgba(0,224,255,0.35), transparent 45%),
-        radial-gradient(circle at 70% 30%, rgba(212,175,55,0.35), transparent 38%),
+        radial-gradient(circle, rgba(0,224,255,0.32), transparent 45%),
+        radial-gradient(circle at 70% 30%, rgba(212,175,55,0.34), transparent 38%),
         radial-gradient(circle at 30% 80%, rgba(126,62,255,0.35), transparent 42%);
       filter: blur(8px);
       animation: pulse 6s ease-in-out infinite;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
     .orb::after {
@@ -115,20 +110,20 @@
       position: absolute;
       inset: 30px;
       border-radius: 50%;
-      background-image: radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,0.75) 1px, transparent 1px);
       background-size: 9px 9px;
-      opacity: 0.45;
+      opacity: 0.42;
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
+      50% { transform: scale(1.05); }
     }
 
     .hero-content {
       position: relative;
       z-index: 3;
-      max-width: 980px;
+      max-width: 1020px;
       padding-bottom: 70px;
     }
 
@@ -136,18 +131,16 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 42px;
+      margin-bottom: 38px;
       padding: 13px 22px;
       border-radius: 999px;
       background: rgba(255,255,255,0.08);
       color: #dfe3ec;
-      font-weight: 700;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
     }
 
-    .badge span {
-      color: #d4af37;
-    }
+    .badge span { color: #d4af37; }
 
     h1 {
       font-size: clamp(48px, 7vw, 96px);
@@ -163,10 +156,10 @@
     }
 
     .subtitle {
-      max-width: 760px;
+      max-width: 790px;
       margin: 0 auto 38px;
-      font-size: clamp(19px, 2vw, 28px);
-      line-height: 1.25;
+      font-size: clamp(19px, 2vw, 27px);
+      line-height: 1.3;
       color: #d7dbe6;
     }
 
@@ -186,7 +179,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 28px;
       color: rgba(255,255,255,0.78);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 22px;
       letter-spacing: 1px;
     }
@@ -197,23 +190,21 @@
     }
 
     .section {
-      scroll-margin-top: 110px;
+      scroll-margin-top: 105px;
       padding: 100px 8%;
       background: #0b1220;
     }
 
-    .section.alt {
-      background: #080d18;
-    }
+    .section.alt { background: #080d18; }
 
     .section h2 {
-      font-size: 44px;
-      margin-bottom: 24px;
+      font-size: clamp(34px, 4vw, 52px);
+      margin-bottom: 20px;
       text-align: center;
     }
 
-    .section p {
-      max-width: 820px;
+    .section > p {
+      max-width: 860px;
       margin: 0 auto 54px;
       color: #b9c0ce;
       text-align: center;
@@ -242,33 +233,168 @@
       color: #f6d76b;
     }
 
-    .card p {
-      margin: 0;
-      text-align: left;
+    .card p, .card li {
       font-size: 16px;
-      line-height: 1.55;
+      line-height: 1.58;
       color: #c6ccd8;
     }
 
-    .cta {
-      scroll-margin-top: 110px;
-      padding: 110px 32px;
+    .card ul { padding-left: 18px; }
+
+    .diagram {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 34px;
+    }
+
+    .step {
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.12);
       text-align: center;
-      background: radial-gradient(circle at center, rgba(212,175,55,0.18), #080d18 55%);
+      min-height: 150px;
     }
 
-    .cta h2 {
-      font-size: 52px;
-      margin-bottom: 22px;
+    .step strong {
+      display: block;
+      color: #f6d76b;
+      margin-bottom: 12px;
+      font-size: 18px;
     }
 
-    .cta p {
-      max-width: 700px;
-      margin: 0 auto 34px;
-      color: #c6ccd8;
-      font-size: 20px;
+    .dashboard {
+      margin: 40px auto 0;
+      max-width: 1050px;
+      border-radius: 30px;
+      padding: 24px;
+      background: #050914;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.45);
+    }
+
+    .dashboard-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      color: #b9c0ce;
+      font-weight: 700;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+
+    .panel {
+      border-radius: 22px;
+      padding: 22px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .alert {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.32);
+      margin-top: 12px;
+      color: #f4e6ad;
+      font-size: 15px;
       line-height: 1.5;
     }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .metric {
+      padding: 26px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 38px;
+      color: #f6d76b;
+      margin-bottom: 8px;
+    }
+
+    .founder {
+      max-width: 1050px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .founder-logo {
+      padding: 35px;
+      border-radius: 32px;
+      background: radial-gradient(circle, rgba(212,175,55,0.18), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+    }
+
+    .founder-logo img {
+      width: 220px;
+      max-width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 0 50px rgba(212,175,55,0.35);
+    }
+
+    .founder-text {
+      color: #c6ccd8;
+      font-size: 17px;
+      line-height: 1.72;
+    }
+
+    .pricing {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 38px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+    }
+
+    .pricing h3 {
+      font-size: 32px;
+      color: #f6d76b;
+      margin-bottom: 14px;
+    }
+
+    .form {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    textarea { min-height: 130px; resize: vertical; }
 
     footer {
       padding: 34px 48px;
@@ -280,17 +406,19 @@
       gap: 14px;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1100px) {
       nav { display: none; }
-      header { padding: 20px 24px; }
       .cards { grid-template-columns: 1fr 1fr; }
-      .logos { grid-template-columns: 1fr 1fr; }
-      .orb { width: 520px; height: 520px; }
+      .diagram { grid-template-columns: 1fr; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .founder { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 620px) {
-      .cards { grid-template-columns: 1fr; }
-      .logos { grid-template-columns: 1fr; font-size: 20px; }
+    @media (max-width: 700px) {
+      header { padding: 18px 20px; }
+      .brand { font-size: 18px; }
+      .cards, .metric-row, .logos { grid-template-columns: 1fr; }
+      .logos { font-size: 20px; }
       .hero { padding-top: 140px; }
       h1 { letter-spacing: -1.5px; }
       .orb { width: 360px; height: 360px; }
@@ -300,159 +428,233 @@
 
 <body>
 
-  <header>
-    <div class="brand">
-      <img src="Logo.jpg" alt="KulaShield logo">
-      KulaShield MCP
+<header>
+  <div class="brand">
+    <img src="Logo.jpg" alt="KulaShield logo">
+    KulaShield MCP
+  </div>
+
+  <nav>
+    <a href="#product">Product</a>
+    <a href="#demo">Demo</a>
+    <a href="#traction">Traction</a>
+    <a href="#team">Team</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#resources">Resources</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <a class="btn" href="#contact">Book Demo</a>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="orb"></div>
+
+  <div class="hero-content">
+    <div class="badge"><span>●</span> AI Agent Threat Detection Platform</div>
+
+    <h1>
+      Get rogue AI agents<br>
+      <span class="gradient">under control</span>
+    </h1>
+
+    <p class="subtitle">
+      KulaShield MCP detects hidden agents, rogue MCP servers, suspicious permission chains and potential corporate data exfiltration.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn" href="#contact">Book Demo</a>
+      <a class="btn btn-dark" href="#product">How it Works</a>
+    </div>
+  </div>
+
+  <div class="logos">
+    <span>Rogue MCP</span>
+    <span>Shadow AI</span>
+    <span>Permission Chains</span>
+    <span>Data Exfiltration</span>
+  </div>
+</section>
+
+<section class="section" id="product">
+  <h2>Product / How it Works</h2>
+  <p>
+    KulaShield MCP gives security teams visibility into AI agents, MCP endpoints, tool permissions and abnormal behavior across enterprise environments.
+  </p>
+
+  <div class="diagram">
+    <div class="step"><strong>1. Discover</strong>Scan MCP endpoints, AI tools, agent workflows and connected services.</div>
+    <div class="step"><strong>2. Map</strong>Build permission chains between agents, users, tools and sensitive data.</div>
+    <div class="step"><strong>3. Analyze</strong>Use behavioral analysis to detect unusual access, tool calls and movement patterns.</div>
+    <div class="step"><strong>4. Alert</strong>Generate security alerts for rogue servers, risky chains and exfiltration indicators.</div>
+    <div class="step"><strong>5. Remediate</strong>Guide teams toward access removal, isolation and policy enforcement.</div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dashboard-top">
+      <span>KulaShield MCP Dashboard Mockup</span>
+      <span>Status: Monitoring</span>
     </div>
 
-    <nav>
-      <a href="#detection">Detection</a>
-      <a href="#shadow-ai">Shadow AI</a>
-      <a href="#mcp">MCP Security</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <a class="btn" href="#contact">Book Demo</a>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="orb"></div>
-
-      <div class="hero-content">
-        <div class="badge">
-          <span>●</span> AI Agent Threat Detection Platform
-        </div>
-
-        <h1>
-          Get rogue AI agents<br>
-          <span class="gradient">under control</span>
-        </h1>
-
-        <p class="subtitle">
-          KulaShield MCP detects hidden agents, rogue MCP servers,
-          suspicious permission chains and potential corporate data exfiltration.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn" href="#contact">Book Demo</a>
-          <a class="btn btn-dark" href="#detection">Explore Platform</a>
-        </div>
+    <div class="dashboard-grid">
+      <div class="panel">
+        <h3>Live Detection Map</h3>
+        <div class="alert">Rogue MCP server detected: unknown endpoint connected to Gmail + Notion workspace.</div>
+        <div class="alert">Suspicious permission chain: AI agent → internal docs → export tool → external destination.</div>
+        <div class="alert">Behavioral anomaly: unusual high-volume document access outside normal business pattern.</div>
       </div>
 
-      <div class="logos">
-        <span>Rogue MCP</span>
-        <span>Shadow AI</span>
-        <span>Permission Chains</span>
-        <span>Data Exfiltration</span>
+      <div class="panel">
+        <h3>Risk Summary</h3>
+        <p>Critical: 2</p>
+        <p>High: 6</p>
+        <p>Medium: 14</p>
+        <p>False positive review: pending validation</p>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="section" id="detection">
-      <h2>AI Agent Threat Detection</h2>
+<section class="section alt" id="demo">
+  <h2>Demo / Proof of Concept</h2>
+  <p>
+    Current demo concept: a controlled environment showing discovery of rogue MCP servers, hidden AI agents and suspicious permission chains.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Live Demo</h3>
+      <p>Interactive walkthrough of detection logic, alert generation and investigation flow.</p>
+    </div>
+    <div class="card">
+      <h3>2-3 Minute Video</h3>
+      <p>Short product video showing dashboard, alerts and example investigation path.</p>
+    </div>
+    <div class="card">
+      <h3>Test Scenario</h3>
+      <p>Example: rogue MCP server gains access to Gmail, Notion and internal documents.</p>
+    </div>
+    <div class="card">
+      <h3>POC Output</h3>
+      <p>Clear report with discovered endpoints, risks, permission chains and suggested remediation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="traction">
+  <h2>Traction / Validation</h2>
+  <p>
+    Placeholder validation section for beta users, pilots, Letters of Intent and technical testing metrics.
+  </p>
+
+  <div class="metric-row">
+    <div class="metric"><strong>2</strong>Target pilot environments</div>
+    <div class="metric"><strong>15+</strong>Example MCP endpoints in test scope</div>
+    <div class="metric"><strong>TBD</strong>False positive rate after beta</div>
+  </div>
+</section>
+
+<section class="section alt" id="team">
+  <h2>Founder / Team</h2>
+
+  <div class="founder">
+    <div class="founder-logo">
+      <img src="Logo.jpg" alt="KulaShield founder logo">
+    </div>
+
+    <div class="founder-text">
       <p>
-        Continuous discovery and investigation layer for modern AI-driven environments.
-        Built to expose risky autonomous behavior before it becomes a security incident.
+        Founder of KulaShield MCP with operational background in physical security,
+        cybersecurity operations, crisis response and critical infrastructure protection.
       </p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Hidden Agents</h3>
-          <p>Detect unauthorized AI agents operating across cloud, SaaS and internal workflows.</p>
-        </div>
-
-        <div class="card">
-          <h3>Rogue MCP Servers</h3>
-          <p>Identify unknown or misconfigured MCP servers connected to sensitive business tools.</p>
-        </div>
-
-        <div class="card">
-          <h3>Permission Chains</h3>
-          <p>Map suspicious access paths between agents, tools, identities and corporate data.</p>
-        </div>
-
-        <div class="card">
-          <h3>Data Exfiltration</h3>
-          <p>Flag abnormal data movement patterns and risky agent-driven export behavior.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="shadow-ai">
-      <h2>Shadow AI Discovery</h2>
+      <br>
       <p>
-        KulaShield MCP helps discover AI tools, agents and automations that operate outside official governance.
+        Former Police Criminal Division officer and Regional Security Manager within Google security operations across Poland.
       </p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Unknown AI Tools</h3>
-          <p>Find AI systems used without formal approval or security review.</p>
-        </div>
-
-        <div class="card">
-          <h3>Agent Inventory</h3>
-          <p>Create visibility across active agents, connected tools and identities.</p>
-        </div>
-
-        <div class="card">
-          <h3>Risk Scoring</h3>
-          <p>Prioritize suspicious AI activity by exposure, permissions and data access.</p>
-        </div>
-
-        <div class="card">
-          <h3>Governance</h3>
-          <p>Support policy enforcement for enterprise AI usage.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="mcp">
-      <h2>MCP Security</h2>
+      <br>
       <p>
-        Detect risky MCP servers, unsafe tool connections and dangerous permission paths before they are abused.
+        Experience includes enterprise security environments, compliance operations, incident response,
+        operational continuity and AI-driven security automation.
       </p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>MCP Server Mapping</h3>
-          <p>Track authorized and unauthorized MCP servers across the organization.</p>
-        </div>
-
-        <div class="card">
-          <h3>Tool Exposure</h3>
-          <p>Identify tools that expose sensitive operations to agents.</p>
-        </div>
-
-        <div class="card">
-          <h3>Permission Chains</h3>
-          <p>Analyze how agents can move from low-risk access to sensitive systems.</p>
-        </div>
-
-        <div class="card">
-          <h3>Incident Signals</h3>
-          <p>Surface early indicators of suspicious agent behavior.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta" id="contact">
-      <h2>Secure your AI agent layer</h2>
+      <br>
       <p>
-        Discover Shadow AI, investigate rogue MCP activity and reduce the risk of silent data exposure.
+        Currently Head of Operations at TomFit AG, focused on AI/LLM implementation,
+        risk management and secure enterprise automation.
       </p>
+      <br>
+      <p>
+        Security-cleared professional with experience in high-security government and international operational environments.
+      </p>
+    </div>
+  </div>
+</section>
 
-      <a class="btn" href="mailto:contact@kulashield.com?subject=KulaShield%20MCP%20Demo%20Request">
-        Request Access
-      </a>
-    </section>
-  </main>
+<section class="section" id="pricing">
+  <h2>Pricing</h2>
+  <p>
+    Enterprise security product for organizations adopting AI agents, MCP servers and LLM-based automation.
+  </p>
 
-  <footer>
-    <span>© 2026 KulaShield MCP</span>
-    <span>AI Agent Security · Shadow AI Discovery · MCP Threat Detection</span>
-  </footer>
+  <div class="pricing">
+    <h3>Enterprise</h3>
+    <p>Custom deployment, pilot evaluation, dashboard access, security review and detection roadmap.</p>
+    <br>
+    <a class="btn" href="mailto:krystiankula@gmail.com?subject=KulaShield%20MCP%20Enterprise%20Pricing">
+      Contact us: krystiankula@gmail.com
+    </a>
+  </div>
+</section>
+
+<section class="section alt" id="resources">
+  <h2>Blog / Resources</h2>
+  <p>
+    Resource example for investors and security teams evaluating AI agent risk.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Article</h3>
+      <p><strong>Why MCP Security Matters</strong></p>
+      <p>MCP servers can connect AI agents to powerful enterprise tools. Without visibility, organizations may lose control over tool access, data movement and agent behavior.</p>
+    </div>
+    <div class="card">
+      <h3>Threat</h3>
+      <p>Rogue MCP servers may expose sensitive tools to unauthorized agents.</p>
+    </div>
+    <div class="card">
+      <h3>Risk</h3>
+      <p>Permission chains can allow indirect access to email, documents, CRM systems or internal knowledge bases.</p>
+    </div>
+    <div class="card">
+      <h3>Solution</h3>
+      <p>Continuous discovery, behavioral analysis and alerting help security teams regain control.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <h2>Contact / Book Demo</h2>
+  <p>
+    Request access, discuss a pilot or ask for the KulaShield MCP demo.
+  </p>
+
+  <form class="form" action="mailto:krystiankula@gmail.com" method="post" enctype="text/plain">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Business email" required>
+    <input type="text" name="company" placeholder="Company">
+    <textarea name="message" placeholder="Message"></textarea>
+    <button class="btn" type="submit">Request Access</button>
+  </form>
+</section>
+
+</main>
+
+<footer>
+  <span>© 2026 KulaShield MCP</span>
+  <span>AI Agent Security · Shadow AI Discovery · MCP Threat Detection</span>
+</footer>
 
 </body>
 </html>
