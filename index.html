@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KulaGuard AI</title>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -16,7 +15,7 @@ body{background:#050b18;color:white;overflow-x:hidden;}
 .logo img{width:108px;height:108px;object-fit:cover;border-radius:22px;box-shadow:0 0 34px rgba(0,174,255,0.38);}
 .logo h1{color:#f4c95d;margin-top:14px;font-size:28px;}
 .logo p{color:#8fa5c7;font-size:13px;margin-top:10px;line-height:1.5;}
-.nav button{width:100%;background:transparent;border:none;color:#d8e4ff;padding:14px;border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left;transition:0.25s;font-size:15px;}
+.nav button{width:100%;background:transparent;border:none;color:#d8e4ff;padding:14px;border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left;transition:.25s;font-size:15px;}
 .nav button:hover,.nav button.active{background:#13203a;border:1px solid #f4c95d;color:white;}
 .main{padding:30px;}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:20px;flex-wrap:wrap;}
@@ -26,7 +25,7 @@ body{background:#050b18;color:white;overflow-x:hidden;}
 .lang-btn{background:#101b31;border:1px solid #f4c95d;color:#f4c95d;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;margin-bottom:10px;}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px;}
-.card{background:#0f1728;border:1px solid #213454;border-radius:20px;padding:22px;box-shadow:0 0 25px rgba(0,0,0,0.3);}
+.card{background:#0f1728;border:1px solid #213454;border-radius:20px;padding:22px;box-shadow:0 0 25px rgba(0,0,0,.3);}
 .card h3{color:#8ea6ca;font-size:14px;margin-bottom:14px;}
 .metric{font-size:38px;font-weight:800;color:#f4c95d;}
 .metric.red{color:#ff4d5d;}
@@ -54,7 +53,7 @@ body{background:#050b18;color:white;overflow-x:hidden;}
 .integration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
 .integration{background:#101b31;border:1px solid #263a5e;padding:18px;border-radius:16px;text-align:center;color:#dbe8ff;font-weight:700;}
 .quote{background:#101b31;border:1px solid #263a5e;padding:20px;border-radius:18px;color:#dbe8ff;line-height:1.6;}
-.map{min-height:270px;background:radial-gradient(circle at 54% 45%, rgba(244,201,93,0.22), transparent 10%),radial-gradient(circle at 48% 40%, rgba(0,191,255,0.28), transparent 13%),linear-gradient(135deg,#0b1628,#061020);border:1px solid #263a5e;border-radius:20px;position:relative;overflow:hidden;}
+.map{min-height:270px;background:radial-gradient(circle at 54% 45%,rgba(244,201,93,.22),transparent 10%),radial-gradient(circle at 48% 40%,rgba(0,191,255,.28),transparent 13%),linear-gradient(135deg,#0b1628,#061020);border:1px solid #263a5e;border-radius:20px;position:relative;overflow:hidden;}
 .map::before{content:"CEE LIVE RISK MAP";position:absolute;top:20px;left:20px;color:#f4c95d;font-weight:800;letter-spacing:1px;}
 .map-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:#ff4d5d;box-shadow:0 0 22px #ff4d5d;animation:blink 1.2s infinite;}
 .dot1{top:42%;left:52%;}.dot2{top:47%;left:56%;}.dot3{top:36%;left:49%;}.dot4{top:55%;left:59%;}
@@ -109,27 +108,27 @@ input,textarea,select{width:100%;background:#08101f;border:1px solid #223657;bor
 
 <div>
 <button class="lang-btn" onclick="toggleLang()">PL / EN</button>
-<div class="status">
+<div class="status" id="statusBox">
 Last scan: 4 minutes ago<br>
 Connected to 312 endpoints<br>
-Demo environment active
+Private Assessment Program active
 </div>
 </div>
 </div>
 
 <section id="dashboard" class="section active">
 <div class="grid">
-<div class="card"><h3>AI Tools Detected</h3><div class="metric">41</div><div class="hint">Across SaaS, cloud, endpoint and repositories.</div></div>
-<div class="card"><h3>Shadow AI Risk</h3><div class="metric red">CRITICAL</div><div class="hint">Unauthorized AI usage detected in sensitive business units.</div></div>
-<div class="card"><h3>NIS2 Readiness</h3><div class="metric">58%</div><div class="progress"><span style="width:58%"></span></div></div>
-<div class="card"><h3>AI Act Compliance</h3><div class="metric">64%</div><div class="progress"><span style="width:64%"></span></div></div>
+<div class="card"><h3 id="m1">AI Tools Detected</h3><div class="metric">41</div><div class="hint" id="h1">Across SaaS, cloud, endpoint and repositories.</div></div>
+<div class="card"><h3 id="m2">Shadow AI Risk</h3><div class="metric red">CRITICAL</div><div class="hint" id="h2">Unauthorized AI usage detected in sensitive business units.</div></div>
+<div class="card"><h3 id="m3">NIS2 Readiness</h3><div class="metric">58%</div><div class="progress"><span style="width:58%"></span></div></div>
+<div class="card"><h3 id="m4">AI Act Compliance</h3><div class="metric">64%</div><div class="progress"><span style="width:64%"></span></div></div>
 </div>
 
 <div class="grid">
-<div class="card"><h3>Estimated Financial Exposure</h3><div class="metric red">€3.8M</div><div class="hint">Potential breach and compliance impact exposure.</div></div>
-<div class="card"><h3>AI Prompts Analyzed</h3><div class="metric">8,420</div><div class="hint">Prompt activity reviewed for risk and leakage.</div></div>
-<div class="card"><h3>Endpoints Monitored</h3><div class="metric">312</div><div class="hint">Enterprise endpoint telemetry in validation environment.</div></div>
-<div class="card"><h3>Risk Reduction Target</h3><div class="metric green">-82%</div><div class="hint">Target reduction of unauthorized AI usage.</div></div>
+<div class="card"><h3 id="m5">Estimated Financial Exposure</h3><div class="metric red">€3.8M</div><div class="hint" id="h5">Potential breach and compliance impact exposure.</div></div>
+<div class="card"><h3 id="m6">AI Prompts Analyzed</h3><div class="metric">8,420</div><div class="hint" id="h6">Prompt activity reviewed for risk and leakage.</div></div>
+<div class="card"><h3 id="m7">Endpoints Monitored</h3><div class="metric">312</div><div class="hint" id="h7">Enterprise assessment dataset across monitored endpoint telemetry.</div></div>
+<div class="card"><h3 id="m8">Risk Reduction Target</h3><div class="metric green">-82%</div><div class="hint" id="h8">Target reduction of unauthorized AI usage.</div></div>
 </div>
 
 <div class="content">
@@ -165,14 +164,14 @@ Demo environment active
 
 <section id="traction" class="section">
 <div class="grid">
-<div class="card"><h3>Endpoints Monitored</h3><div class="metric">312</div><div class="hint">Early validation environment for CEE energy and regulated infrastructure operators.</div></div>
+<div class="card"><h3>Endpoints Monitored</h3><div class="metric">312</div><div class="hint">Private Assessment Program for CEE energy and regulated infrastructure operators.</div></div>
 <div class="card"><h3>Prompts Analyzed</h3><div class="metric">8,420</div><div class="hint">AI prompt activity risk-classified for leakage, policy and abuse patterns.</div></div>
 <div class="card"><h3>Shadow AI Events</h3><div class="metric">41</div><div class="hint">Unapproved AI tools and agent activity identified across business units.</div></div>
 <div class="card"><h3>Unauthorized Usage Reduction</h3><div class="metric green">-82%</div><div class="hint">Target after governance policy rollout and tool-level remediation.</div></div>
 </div>
 
 <div class="grid-3">
-<div class="quote">“Visibility into unmanaged AI usage became clear within the first assessment cycle.”<br><br><span class="hint">Security lead involved in pilot discussions with CEE energy infrastructure environment</span></div>
+<div class="quote">“Visibility into unmanaged AI usage became clear within the first assessment cycle.”<br><br><span class="hint">Security lead involved in private assessment discussions with CEE energy infrastructure environment</span></div>
 <div class="quote">“The executive report helped translate AI risk into business language.”<br><br><span class="hint">Compliance lead, regulated industrial environment</span></div>
 <div class="quote">“The OT/IT adversarial simulation is the most valuable differentiator.”<br><br><span class="hint">Security advisor, infrastructure resilience team</span></div>
 </div>
@@ -297,38 +296,54 @@ KulaGuard AI was created to help organizations detect Shadow AI, reduce complian
 let currentLang='EN';
 
 function toggleLang(){
-  currentLang=currentLang==='EN'?'PL':'EN';
+currentLang=currentLang==='EN'?'PL':'EN';
 
-  if(currentLang==='PL'){
-    document.getElementById('topTitle').textContent='KulaGuard AI Demo';
-    document.getElementById('topSubtitle').textContent='Platforma AI Security dla infrastruktury krytycznej, energetyki, OT/IT i sektorów regulowanych.';
-    document.getElementById('sideSubtitle').textContent='Platforma AI Security dla infrastruktury krytycznej';
-  }else{
-    document.getElementById('topTitle').textContent='KulaGuard AI Demo';
-    document.getElementById('topSubtitle').textContent='Critical Infrastructure AI Security Platform for enterprise, energy, OT/IT and regulated sectors.';
-    document.getElementById('sideSubtitle').textContent='AI Security Platform for Critical Infrastructure';
-  }
+if(currentLang==='PL'){
+document.getElementById('topSubtitle').textContent='Platforma AI Security dla infrastruktury krytycznej, energetyki, OT/IT i sektorów regulowanych.';
+document.getElementById('sideSubtitle').textContent='Platforma AI Security dla infrastruktury krytycznej';
+document.getElementById('statusBox').innerHTML='Ostatni skan: 4 minuty temu<br>Połączono z 312 endpointami<br>Aktywny Private Assessment Program';
+document.getElementById('m1').textContent='Wykryte narzędzia AI';
+document.getElementById('m2').textContent='Ryzyko Shadow AI';
+document.getElementById('m3').textContent='Gotowość NIS2';
+document.getElementById('m4').textContent='Zgodność AI Act';
+document.getElementById('m5').textContent='Szacowana ekspozycja finansowa';
+document.getElementById('m6').textContent='Przeanalizowane prompty AI';
+document.getElementById('m7').textContent='Monitorowane endpointy';
+document.getElementById('m8').textContent='Cel redukcji ryzyka';
+}else{
+document.getElementById('topSubtitle').textContent='Critical Infrastructure AI Security Platform for enterprise, energy, OT/IT and regulated sectors.';
+document.getElementById('sideSubtitle').textContent='AI Security Platform for Critical Infrastructure';
+document.getElementById('statusBox').innerHTML='Last scan: 4 minutes ago<br>Connected to 312 endpoints<br>Private Assessment Program active';
+document.getElementById('m1').textContent='AI Tools Detected';
+document.getElementById('m2').textContent='Shadow AI Risk';
+document.getElementById('m3').textContent='NIS2 Readiness';
+document.getElementById('m4').textContent='AI Act Compliance';
+document.getElementById('m5').textContent='Estimated Financial Exposure';
+document.getElementById('m6').textContent='AI Prompts Analyzed';
+document.getElementById('m7').textContent='Endpoints Monitored';
+document.getElementById('m8').textContent='Risk Reduction Target';
+}
 }
 
 function showSection(id,button){
-  document.querySelectorAll('.section').forEach(section=>section.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(btn=>btn.classList.remove('active'));
-  button.classList.add('active');
+document.querySelectorAll('.section').forEach(section=>section.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.nav button').forEach(btn=>btn.classList.remove('active'));
+button.classList.add('active');
 }
 
 function backDashboard(){
-  showSection('dashboard',document.querySelectorAll('.nav button')[0]);
+showSection('dashboard',document.querySelectorAll('.nav button')[0]);
 }
 
 function generateReport(){
-  const company=document.getElementById('companyName').value || 'Client Organization';
-  const sector=document.getElementById('sector').value;
-  const exposure=document.getElementById('exposure').value;
-  const reduction=document.getElementById('reduction').value;
-  const notes=document.getElementById('notes').value;
+const company=document.getElementById('companyName').value || 'Client Organization';
+const sector=document.getElementById('sector').value;
+const exposure=document.getElementById('exposure').value;
+const reduction=document.getElementById('reduction').value;
+const notes=document.getElementById('notes').value;
 
-  const report=`KulaGuard AI - Executive AI Security Report
+const report=`KulaGuard AI - Executive AI Security Report
 
 Organization: ${company}
 Sector: ${sector}
@@ -339,7 +354,7 @@ KulaGuard AI identified critical Shadow AI exposure, incomplete AI governance co
 Key Findings:
 - 41 AI tools and Shadow AI events detected.
 - 8,420 AI prompts analyzed for leakage and policy risk.
-- 312 endpoints monitored in validation environment.
+- 312 endpoints monitored through Private Assessment Program data.
 - NIS2 readiness score: 58%.
 - AI Act compliance score: 64%.
 - Estimated financial exposure: ${exposure}.
@@ -362,55 +377,118 @@ ${notes}
 Conclusion:
 The organization should prioritize AI visibility, Shadow AI governance and adversarial AI readiness within the next 90 days.`;
 
-  document.getElementById('reportBox').textContent=report;
-  return report;
+document.getElementById('reportBox').textContent=report;
+return {company,sector,exposure,reduction,notes};
 }
 
 function copyReport(){
-  const report=document.getElementById('reportBox').textContent;
-  navigator.clipboard.writeText(report);
-  alert('Report copied');
+const report=document.getElementById('reportBox').textContent;
+navigator.clipboard.writeText(report);
+alert('Report copied');
 }
 
 function exportPDF(){
-  const report=generateReport();
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+const data=generateReport();
+const { jsPDF }=window.jspdf;
+const doc=new jsPDF();
 
-  doc.setFillColor(5,11,24);
-  doc.rect(0,0,210,297,'F');
+doc.setFillColor(5,11,24);
+doc.rect(0,0,210,297,'F');
 
-  doc.setTextColor(244,201,93);
-  doc.setFontSize(22);
-  doc.text('KulaGuard AI',20,22);
+doc.setFillColor(15,23,40);
+doc.roundedRect(12,12,186,32,4,4,'F');
 
-  doc.setTextColor(255,255,255);
-  doc.setFontSize(13);
-  doc.text('Executive AI Security Report',20,32);
+doc.setTextColor(244,201,93);
+doc.setFontSize(22);
+doc.setFont(undefined,'bold');
+doc.text('KulaGuard AI',20,26);
 
-  doc.setDrawColor(244,201,93);
-  doc.line(20,38,190,38);
+doc.setTextColor(255,255,255);
+doc.setFontSize(11);
+doc.setFont(undefined,'normal');
+doc.text('Executive AI Security Report | Confidential Demo',20,36);
 
-  doc.setFontSize(10);
-  doc.setTextColor(220,230,255);
+doc.setDrawColor(244,201,93);
+doc.line(12,50,198,50);
 
-  const lines = doc.splitTextToSize(report,170);
-  doc.text(lines,20,50);
+let y=62;
 
-  doc.setFontSize(8);
-  doc.setTextColor(140,160,190);
-  doc.text('© 2026 KulaGuard AI | Confidential Demo',20,285);
+function sectionTitle(title){
+doc.setTextColor(244,201,93);
+doc.setFontSize(13);
+doc.setFont(undefined,'bold');
+doc.text(title,20,y);
+y+=8;
+}
 
-  doc.save('KulaGuard_AI_Executive_Report.pdf');
+function bodyText(text){
+doc.setTextColor(220,230,255);
+doc.setFontSize(10);
+doc.setFont(undefined,'normal');
+const lines=doc.splitTextToSize(text,170);
+doc.text(lines,20,y);
+y+=lines.length*5+6;
+}
+
+function metric(label,value,x,yPos){
+doc.setFillColor(16,27,49);
+doc.roundedRect(x,yPos,52,24,3,3,'F');
+doc.setTextColor(142,166,202);
+doc.setFontSize(8);
+doc.text(label,x+4,yPos+8);
+doc.setTextColor(244,201,93);
+doc.setFontSize(14);
+doc.setFont(undefined,'bold');
+doc.text(value,x+4,yPos+18);
+}
+
+sectionTitle('Organization');
+bodyText(`Organization: ${data.company}\nSector: ${data.sector}`);
+
+metric('AI Events','41',20,y);
+metric('Prompts','8,420',78,y);
+metric('Endpoints','312',136,y);
+y+=36;
+
+sectionTitle('Executive Summary');
+bodyText('KulaGuard AI identified critical Shadow AI exposure, incomplete AI governance controls and adversarial AI risk across the organization.');
+
+sectionTitle('Key Findings');
+bodyText(`- 41 AI tools and Shadow AI events detected.
+- 8,420 AI prompts analyzed for leakage and policy risk.
+- 312 endpoints monitored through Private Assessment Program data.
+- NIS2 readiness score: 58%.
+- AI Act compliance score: 64%.
+- Estimated financial exposure: ${data.exposure}.
+- Risk reduction target: ${data.reduction}.`);
+
+sectionTitle('Recommended Executive Actions');
+bodyText(`1. Approve a corporate AI Usage Policy.
+2. Create a complete AI asset register.
+3. Assign ownership to all AI tools and agents.
+4. Block unauthorized public AI tools for sensitive departments.
+5. Run adversarial AI simulations for OT/IT environments.
+6. Generate NIS2 / AI Act evidence packs before the next audit cycle.`);
+
+sectionTitle('Additional Notes');
+bodyText(data.notes);
+
+doc.setDrawColor(244,201,93);
+doc.line(12,278,198,278);
+doc.setFontSize(8);
+doc.setTextColor(140,160,190);
+doc.text('© 2026 KulaGuard AI | Confidential Demo | Prepared for enterprise evaluation only',20,286);
+
+doc.save('KulaGuard_AI_Executive_Report.pdf');
 }
 
 function blockTool(button){
-  button.textContent='Blocked';
-  button.disabled=true;
-  button.style.opacity='0.65';
-  const row=button.closest('tr');
-  row.children[1].textContent='Blocked by policy';
-  row.children[2].innerHTML='<span class="badge low">CONTAINED</span>';
+button.textContent='Blocked';
+button.disabled=true;
+button.style.opacity='0.65';
+const row=button.closest('tr');
+row.children[1].textContent='Blocked by policy';
+row.children[2].innerHTML='<span class="badge low">CONTAINED</span>';
 }
 </script>
 
