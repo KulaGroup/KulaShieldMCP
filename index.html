@@ -93,10 +93,14 @@ input,textarea,select{width:100%;background:#08101f;border:1px solid #223657;bor
 <main class="main">
 
 <div class="topbar">
+<div style="display:flex;align-items:center;gap:14px;">
+<img src="Logo.jpg" style="width:52px;height:52px;border-radius:14px;object-fit:cover;border:2px solid #f4c95d;">
 <div>
 <h2>KulaGuard AI Demo</h2>
 <p>Critical Infrastructure AI Security Platform for enterprise, energy, OT/IT and regulated sectors.</p>
 </div>
+</div>
+
 <div class="status">
 Last scan: 4 minutes ago<br>
 Connected to 87 endpoints<br>
@@ -130,7 +134,11 @@ Demo environment active
 <tr><td>AI policy missing for operations team</td><td>Compliance</td><td><span class="badge medium">MEDIUM</span></td></tr>
 </table>
 </div>
-<div class="card"><h3>Live Risk Map</h3><div class="map"><div class="map-dot dot1"></div><div class="map-dot dot2"></div><div class="map-dot dot3"></div><div class="map-dot dot4"></div></div></div>
+
+<div class="card">
+<h3>Live Risk Map</h3>
+<div class="map"><div class="map-dot dot1"></div><div class="map-dot dot2"></div><div class="map-dot dot3"></div><div class="map-dot dot4"></div></div>
+</div>
 </div>
 </section>
 
@@ -142,22 +150,24 @@ Demo environment active
 <div class="step"><div class="step-number">3</div><div><h3>Detect Shadow AI</h3><div class="hint">Classify unauthorized tools, risky prompts, uploads and unmanaged agents.</div></div></div>
 <div class="step"><div class="step-number">4</div><div><h3>Simulate Adversarial AI Attacks</h3><div class="hint">Run prompt injection, AI phishing, data leakage and model abuse simulations.</div></div></div>
 <div class="step"><div class="step-number">5</div><div><h3>Generate Evidence</h3><div class="hint">Produce NIS2 / AI Act evidence packs, executive reports and remediation actions.</div></div></div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </div>
 </section>
 
 <section id="traction" class="section">
 <div class="grid">
-<div class="card"><h3>Endpoints Monitored</h3><div class="metric">87</div><div class="hint">Pilot telemetry across IT environments.</div></div>
+<div class="card"><h3>Endpoints Monitored</h3><div class="metric">87</div><div class="hint">Early-stage pilot simulations for energy and regulated infrastructure environments across CEE.</div></div>
 <div class="card"><h3>Prompts Analyzed</h3><div class="metric">1,248</div><div class="hint">AI prompt activity risk-classified.</div></div>
 <div class="card"><h3>Shadow AI Tools Found</h3><div class="metric">14</div><div class="hint">Unapproved tools identified across departments.</div></div>
 <div class="card"><h3>Unauthorized Usage Reduction</h3><div class="metric green">-82%</div><div class="hint">Target after governance policy rollout.</div></div>
 </div>
 
 <div class="grid-3">
-<div class="quote">“Visibility into unmanaged AI usage became clear within the first assessment cycle.”<br><br><span class="hint">CISO, anonymized energy operator</span></div>
+<div class="quote">“Visibility into unmanaged AI usage became clear within the first assessment cycle.”<br><br><span class="hint">Security lead involved in pilot discussions with CEE energy infrastructure environment</span></div>
 <div class="quote">“The executive report helped translate AI risk into business language.”<br><br><span class="hint">Compliance lead, anonymized industrial group</span></div>
 <div class="quote">“The OT/IT adversarial simulation is the most valuable differentiator.”<br><br><span class="hint">Security advisor, anonymized infrastructure team</span></div>
 </div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </section>
 
 <section id="integrations" class="section">
@@ -167,6 +177,7 @@ Demo environment active
 <div class="integration">Microsoft 365</div><div class="integration">Azure</div><div class="integration">Okta</div><div class="integration">CrowdStrike</div>
 <div class="integration">SentinelOne</div><div class="integration">Siemens</div><div class="integration">Schneider Electric</div><div class="integration">Nozomi Networks</div>
 </div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </div>
 </section>
 
@@ -181,6 +192,7 @@ Demo environment active
 <tr><td>Local LLM</td><td>Unmanaged model</td><td><span class="badge high">HIGH</span></td><td><button class="button" onclick="blockTool(this)">Block Tool</button></td></tr>
 <tr><td>AutoGPT Agent</td><td>Unmanaged agent</td><td><span class="badge critical">CRITICAL</span></td><td><button class="button" onclick="blockTool(this)">Disable Agent</button></td></tr>
 </table>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </div>
 </section>
 
@@ -191,6 +203,7 @@ Demo environment active
 <div class="card"><h3>Risk Matrix</h3><div class="metric green">Ready</div><div class="hint">Generated from AI usage telemetry.</div></div>
 <div class="card"><h3>Audit Trail</h3><div class="metric red">Weak</div><div class="hint">Evidence gaps found.</div></div>
 </div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </section>
 
 <section id="shield" class="section">
@@ -206,15 +219,21 @@ Demo environment active
 </div>
 <div class="card"><h3>Threat Level</h3><div class="metric red">78%</div><div class="progress"><span style="width:78%"></span></div><div class="hint">Adversarial AI activity detected in simulated OT/IT environment.</div></div>
 </div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </section>
 
 <section id="market" class="section">
 <div class="grid-3">
-<div class="card"><h3>Market Opportunity</h3><div class="metric">EU</div><div class="hint">Critical infrastructure, energy, transport, industrial and regulated sectors.</div></div>
+<div class="card"><h3>Market Opportunity</h3><div class="metric">€42B</div><div class="hint">Estimated European cybersecurity and AI governance market opportunity for regulated infrastructure sectors.</div></div>
 <div class="card"><h3>Regulatory Pull</h3><div class="metric">NIS2</div><div class="hint">Governance, incident readiness, evidence and executive accountability.</div></div>
 <div class="card"><h3>Strategic Fit</h3><div class="metric">CEE</div><div class="hint">Designed for energy and infrastructure operators across Central Europe.</div></div>
 </div>
-<div class="card"><h3>Kulczyk Investments Fit</h3><div class="hint">KulaGuard AI focuses on AI security for critical infrastructure, OT/IT environments, energy operators, manufacturing and transport. The platform is aligned with regulatory pressure from NIS2 and AI Act, and can support portfolio-level resilience, AI governance and cyber risk reduction.</div></div>
+
+<div class="card">
+<h3>Kulczyk Investments Fit</h3>
+<div class="hint">KulaGuard AI focuses on AI security for critical infrastructure, OT/IT environments, energy operators, manufacturing and transport. The platform is aligned with regulatory pressure from NIS2 and AI Act, and can support portfolio-level resilience, AI governance and cyber risk reduction.</div>
+</div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </section>
 
 <section id="about" class="section">
@@ -237,6 +256,7 @@ KulaGuard AI was created to help organizations detect Shadow AI, reduce complian
 </p>
 </div>
 </div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </div>
 </section>
 
@@ -252,6 +272,7 @@ KulaGuard AI was created to help organizations detect Shadow AI, reduce complian
 <button class="button" onclick="copyReport()">Copy Report</button>
 <button class="button" onclick="window.print()">Export PDF</button>
 <div id="reportBox" class="report-box">Click Generate Report</div>
+<button class="button" onclick="showSection('dashboard',document.querySelectorAll('.nav button')[0])">Back to Dashboard</button>
 </div>
 </section>
 
