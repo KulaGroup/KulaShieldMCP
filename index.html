@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KulaGuard AI - Demo Platform</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: #f5f7fb;
+      min-height: 100vh;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: #070b16;
+      border-right: 1px solid #1d2942;
+      padding: 28px 22px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: #93a4c7;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 34px;
+    }
+
+    .nav button {
+      width: 100%;
+      background: transparent;
+      color: #c9d6f2;
+      border: 1px solid transparent;
+      padding: 13px 14px;
+      margin-bottom: 10px;
+      text-align: left;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav button.active,
+    .nav button:hover {
+      background: #14213d;
+      border-color: #2a3d66;
+      color: #ffffff;
+    }
+
+    .main {
+      padding: 30px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      gap: 20px;
+    }
+
+    .topbar h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .topbar p {
+      color: #9fb0d2;
+      font-size: 14px;
+    }
+
+    .status {
+      background: #0f1b31;
+      border: 1px solid #243756;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 13px;
+      color: #b8c8e8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: #111a2e;
+      border: 1px solid #233455;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    }
+
+    .card h3 {
+      font-size: 14px;
+      color: #9fb0d2;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .metric {
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hint {
+      color: #93a4c7;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .table th,
+    .table td {
+      border-bottom: 1px solid #263855;
+      padding: 13px 10px;
+      text-align: left;
+    }
+
+    .table th {
+      color: #9fb0d2;
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .high { background: #592020; color: #ffd0d0; }
+    .medium { background: #59461d; color: #ffe4a3; }
+    .low { background: #173d2b; color: #b7ffd4; }
+    .blue { background: #15355d; color: #bfe0ff; }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .report-box {
+      background: #090e1b;
+      border: 1px solid #263855;
+      border-radius: 14px;
+      padding: 18px;
+      color: #dbe6ff;
+      line-height: 1.65;
+      white-space: pre-line;
+      font-size: 14px;
+      min-height: 240px;
+    }
+
+    .button {
+      background: #4c7dff;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 14px;
+    }
+
+    .button:hover {
+      background: #396af0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      background: #090e1b;
+      border: 1px solid #263855;
+      border-radius: 12px;
+      padding: 12px;
+      color: #f5f7fb;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      color: #7284a8;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1000px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid #1d2942; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .content { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .grid, .form-row { grid-template-columns: 1fr; }
+      .main { padding: 20px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">KulaGuard AI</div>
+      <div class="tagline">Shadow AI Detection & AI Compliance Automation for critical infrastructure.</div>
+
+      <div class="nav">
+        <button class="active" onclick="showSection('dashboard', this)">Dashboard</button>
+        <button onclick="showSection('shadow', this)">Shadow AI Radar</button>
+        <button onclick="showSection('compliance', this)">NIS2 / AI Act</button>
+        <button onclick="showSection('threats', this)">Adversarial AI Shield</button>
+        <button onclick="showSection('report', this)">Executive Report</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>KulaGuard AI Demo</h1>
+          <p>Interactive client demo showing AI visibility, compliance readiness and AI security posture.</p>
+        </div>
+        <div class="status">Demo Mode · No real company data used</div>
+      </div>
+
+      <section id="dashboard" class="section active">
+        <div class="grid">
+          <div class="card">
+            <h3>AI Tools Detected</h3>
+            <div class="metric">17</div>
+            <div class="hint">Across SaaS, endpoints, cloud and repositories.</div>
+          </div>
+          <div class="card">
+            <h3>Shadow AI Risk</h3>
+            <div class="metric">High</div>
+            <div class="hint">Unauthorized AI usage detected in 4 departments.</div>
+          </div>
+          <div class="card">
+            <h3>NIS2 Readiness</h3>
+            <div class="metric">62%</div>
+            <div class="hint">Evidence gaps identified in AI governance controls.</div>
+          </div>
+          <div class="card">
+            <h3>AI Incidents</h3>
+            <div class="metric">9</div>
+            <div class="hint">Potential risky prompts, file uploads and agent actions.</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="card">
+            <h3>Recent AI Security Events</h3>
+            <table class="table">
+              <thead>
+                <tr><th>Event</th><th>Source</th><th>Risk</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Confidential document uploaded to public AI tool</td><td>Endpoint</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>Unauthorized Copilot plugin detected</td><td>Microsoft 365</td><td><span class="badge medium">Medium</span></td></tr>
+                <tr><td>Local LLM running without approval</td><td>Developer Workstation</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>AI usage policy missing for Operations</td><td>Compliance</td><td><span class="badge medium">Medium</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>AI Risk Summary</h3>
+            <p class="hint">KulaGuard AI detected unmanaged AI usage, missing governance evidence and elevated risk in departments handling sensitive operational data.</p>
+            <button class="button" onclick="showSection('report', document.querySelectorAll('.nav button')[4])">Generate Executive Report</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="shadow" class="section">
+        <div class="card">
+          <h3>Shadow AI Radar</h3>
+          <table class="table">
+            <thead>
+              <tr><th>Tool</th><th>Location</th><th>Status</th><th>Risk</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ChatGPT</td><td>Finance Department</td><td>Not approved</td><td><span class="badge high">High</span></td></tr>
+              <tr><td>Microsoft Copilot</td><td>Legal Department</td><td>Approved</td><td><span class="badge low">Low</span></td></tr>
+              <tr><td>Gemini</td><td>Marketing</td><td>Not reviewed</td><td><span class="badge medium">Medium</span></td></tr>
+              <tr><td>Local LLM</td><td>Engineering</td><td>Unknown owner</td><td><span class="badge high">High</span></td></tr>
+              <tr><td>Claude</td><td>Procurement</td><td>Not approved</td><td><span class="badge medium">Medium</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="compliance" class="section">
+        <div class="grid">
+          <div class="card"><h3>AI Usage Policy</h3><div class="metric">Missing</div><div class="hint">Policy template can be generated.</div></div>
+          <div class="card"><h3>AI Register</h3><div class="metric">Partial</div><div class="hint">5 approved tools, 12 unreviewed tools.</div></div>
+          <div class="card"><h3>Risk Matrix</h3><div class="metric">Ready</div><div class="hint">Generated from discovered AI usage.</div></div>
+          <div class="card"><h3>Audit Trail</h3><div class="metric">Weak</div><div class="hint">Evidence gaps detected.</div></div>
+        </div>
+        <div class="card">
+          <h3>NIS2 / AI Act Evidence Checklist</h3>
+          <table class="table">
+            <thead><tr><th>Control</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>AI asset inventory</td><td><span class="badge medium">Partial</span></td><td>Complete ownership mapping</td></tr>
+              <tr><td>AI risk assessment</td><td><span class="badge blue">Generated</span></td><td>Review by compliance team</td></tr>
+              <tr><td>Incident response workflow</td><td><span class="badge high">Missing</span></td><td>Create AI incident playbook</td></tr>
+              <tr><td>Executive reporting</td><td><span class="badge blue">Available</span></td><td>Export board report</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="threats" class="section">
+        <div class="content">
+          <div class="card">
+            <h3>Adversarial AI Simulation</h3>
+            <table class="table">
+              <thead><tr><th>Scenario</th><th>Result</th><th>Risk</th></tr></thead>
+              <tbody>
+                <tr><td>Prompt injection against internal assistant</td><td>Partially successful</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>AI-driven phishing simulation</td><td>8 users clicked</td><td><span class="badge medium">Medium</span></td></tr>
+                <tr><td>Data leakage via prompt upload</td><td>Detected</td><td><span class="badge high">High</span></td></tr>
+                <tr><td>Model abuse attempt</td><td>Blocked</td><td><span class="badge low">Low</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Recommended Playbooks</h3>
+            <p class="hint">1. Block unapproved AI domains for sensitive departments.</p><br>
+            <p class="hint">2. Introduce AI usage approval workflow.</p><br>
+            <p class="hint">3. Create AI incident classification procedure.</p><br>
+            <p class="hint">4. Train employees on prompt injection and data leakage.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="report" class="section">
+        <div class="card">
+          <h3>Executive Report Generator</h3>
+          <div class="form-row">
+            <input id="companyName" placeholder="Company name" value="Client Energy Group" />
+            <select id="sector">
+              <option>Energy</option>
+              <option>Manufacturing</option>
+              <option>Transport</option>
+              <option>Financial Services</option>
+              <option>Critical Infrastructure</option>
+            </select>
+          </div>
+          <textarea id="notes" placeholder="Additional notes">Initial assessment indicates unmanaged AI usage, incomplete AI governance documentation and elevated risk of sensitive data exposure through public AI tools.</textarea>
+          <button class="button" onclick="generateReport()">Generate Report</button>
+          <button class="button" onclick="copyReport()">Copy Report</button>
+          <button class="button" onclick="window.print()">Print / Save as PDF</button>
+          <div id="reportBox" class="report-box" style="margin-top:16px;">Click “Generate Report” to create an executive summary.</div>
+        </div>
+      </section>
+
+      <div class="footer-note">KulaGuard AI demo prototype. This file is prepared for presentation purposes and does not process real telemetry.</div>
+    </main>
+  </div>
+
+  <script>
+    function showSection(id, button) {
+      document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    function generateReport() {
+      const company = document.getElementById('companyName').value || 'Client Organization';
+      const sector = document.getElementById('sector').value;
+      const notes = document.getElementById('notes').value;
+
+      const report = `KulaGuard AI - Executive AI Security Report
+
+Organization: ${company}
+Sector: ${sector}
+
+Summary:
+KulaGuard AI identified elevated Shadow AI exposure and incomplete AI governance controls. The organization is using multiple AI tools across departments, including approved and unapproved systems.
+
+Key Findings:
+1. 17 AI tools detected across SaaS, endpoints, cloud and repositories.
+2. 12 tools require formal review and ownership assignment.
+3. NIS2 / AI Act readiness score: 62%.
+4. High-risk events include confidential data upload to public AI tools and local LLM usage without approval.
+
+Business Risk:
+Uncontrolled AI usage may increase the probability of data leakage, compliance gaps, audit failure and AI-enabled cyber incidents.
+
+Recommended Actions:
+1. Create an official AI Usage Policy.
+2. Build a complete AI asset register.
+3. Assign business owners to all AI tools.
+4. Implement AI incident response workflow.
+5. Run adversarial AI awareness training.
+6. Review high-risk AI usage within 30 days.
+
+Additional Notes:
+${notes}
+
+Conclusion:
+The organization should prioritize AI visibility, governance evidence and Shadow AI risk reduction within the next 90 days.`;
+
+      document.getElementById('reportBox').textContent = report;
+    }
+
+    function copyReport() {
+      const report = document.getElementById('reportBox').textContent;
+      navigator.clipboard.writeText(report);
+      alert('Report copied to clipboard.');
+    }
+  </script>
+</body>
+</html>
