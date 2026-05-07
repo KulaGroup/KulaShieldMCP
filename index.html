@@ -5,758 +5,252 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KulaGuard AI | MVP Investor Preview</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
-body{background:#050b18;color:white;overflow-x:hidden;}
-.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh;}
-.sidebar{background:#08101f;border-right:1px solid #1c2940;padding:28px 20px;}
-.logo{text-align:center;margin-bottom:28px;}
-.logo img{width:108px;height:108px;object-fit:cover;border-radius:22px;box-shadow:0 0 34px rgba(0,174,255,0.38);}
-.logo h1{color:#f4c95d;margin-top:14px;font-size:28px;}
-.logo p{color:#8fa5c7;font-size:13px;margin-top:10px;line-height:1.5;}
-.nav button{width:100%;background:transparent;border:none;color:#d8e4ff;padding:14px;border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left;transition:.25s;font-size:15px;}
-.nav button:hover,.nav button.active{background:#13203a;border:1px solid #f4c95d;color:white;}
-.main{padding:30px;}
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-margin-bottom:25px;
-gap:20px;
+:root{
+  --bg:#030914;--panel:#07111f;--panel2:#0b1628;--line:#223657;--gold:#f4c95d;--gold2:#ffdc75;--text:#f3f7ff;--muted:#93a9c9;--blue:#4d8dff;--red:#ff4d5d;--green:#38e07b;--orange:#ffae42;
 }
-.topbar h2{font-size:36px;color:#f4c95d;margin-bottom:8px;}
-.topbar p{color:#9cb2d3;line-height:1.5;}
-.status{background:#111d35;border:1px solid #2a4065;padding:14px 18px;border-radius:16px;color:#d7e3ff;font-size:13px;line-height:1.55;}
-.lang-btn{background:#101b31;border:1px solid #f4c95d;color:#f4c95d;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;margin-bottom:10px;}
-.notice{background:#101b31;border:1px solid #f4c95d;color:#ffe7a1;padding:14px 18px;border-radius:16px;margin-bottom:22px;font-size:13px;line-height:1.6;}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px;}
-.card{background:#0f1728;border:1px solid #213454;border-radius:20px;padding:22px;box-shadow:0 0 25px rgba(0,0,0,.3);}
-.card h3{color:#8ea6ca;font-size:14px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
-.card h2{color:#f4c95d;margin-bottom:10px;}
-.metric{font-size:34px;font-weight:800;color:#f4c95d;line-height:1.1;}
-.metric.red{color:#ff4d5d;}
-.metric.green{color:#6fffb0;}
-.metric.blue{color:#8fd7ff;}
-.hint{margin-top:10px;color:#92a8ca;font-size:13px;line-height:1.5;}
-.content{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;}
-.table{width:100%;border-collapse:collapse;margin-top:15px;}
-.table th{text-align:left;color:#8ea6ca;font-size:13px;padding:12px;border-bottom:1px solid #243654;}
-.table td{padding:14px 12px;border-bottom:1px solid #1d2d47;font-size:14px;line-height:1.45;vertical-align:top;}
-.badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;display:inline-block;}
-.high{background:#4e1515;color:#ffb3b3;}
-.critical{background:#6e101c;color:#ffd0d6;}
-.medium{background:#54421a;color:#ffe7a1;}
-.low{background:#123626;color:#bcffd8;}
-.info{background:#17324a;color:#bfe8ff;}
-.button{background:#f4c95d;border:none;color:#08101f;padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer;margin-top:16px;margin-right:8px;}
-.button:hover{background:#ffd977;}
-.section{display:none;animation:fadeIn .25s ease;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,Helvetica,sans-serif;}
+body{background:radial-gradient(circle at 35% -10%,rgba(32,89,150,.18),transparent 38%),linear-gradient(135deg,#020712,#071120 58%,#030914);color:var(--text);overflow-x:hidden;}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
+.sidebar{position:sticky;top:0;height:100vh;background:linear-gradient(180deg,rgba(8,16,31,.96),rgba(3,9,20,.98));border-right:1px solid rgba(142,166,202,.28);padding:26px 18px;display:flex;flex-direction:column;}
+.logo{margin-bottom:28px;}
+.logo img{width:88px;height:88px;object-fit:cover;border-radius:20px;border:1px solid var(--gold);box-shadow:0 0 28px rgba(244,201,93,.18);display:block;margin:0 auto 18px;}
+.logo h1{font-size:24px;color:var(--gold);text-align:center;margin-bottom:8px;}
+.logo p{font-size:12px;color:var(--muted);text-align:center;line-height:1.45;}
+.nav{display:flex;flex-direction:column;gap:8px;}
+.nav button{width:100%;background:transparent;border:1px solid transparent;color:#dbe7ff;padding:12px 14px;border-radius:12px;cursor:pointer;text-align:left;transition:.2s;font-size:14px;display:flex;align-items:center;gap:10px;}
+.nav button:hover,.nav button.active{background:linear-gradient(90deg,rgba(244,201,93,.14),rgba(244,201,93,.04));border-color:rgba(244,201,93,.55);color:var(--gold2);}
+.nav .ico{width:18px;display:inline-flex;justify-content:center;color:var(--gold);}
+.side-card{margin-top:auto;border:1px solid rgba(244,201,93,.55);border-radius:14px;padding:16px;background:rgba(10,22,40,.72);}
+.side-card h3{font-size:13px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.side-card p{font-size:12px;color:#dbe7ff;line-height:1.75;}
+.main{padding:28px 34px 24px;max-width:1680px;width:100%;margin:0 auto;}
+.lang-switch{position:fixed;top:24px;right:28px;z-index:50;display:flex;border:1px solid rgba(244,201,93,.6);border-radius:10px;overflow:hidden;background:rgba(6,14,27,.78);backdrop-filter:blur(10px);}
+.lang-switch button{background:transparent;border:none;color:#a9bad7;padding:10px 16px;cursor:pointer;font-weight:800;letter-spacing:.4px;}
+.lang-switch button.active{background:var(--gold);color:#071120;}
+.hero{padding-right:150px;margin-bottom:26px;}
+.hero h2{font-size:42px;line-height:1.05;color:var(--gold);letter-spacing:-.7px;margin-bottom:12px;}
+.hero p{font-size:18px;color:#c8d7f2;line-height:1.55;max-width:1050px;}
+.section{display:none;animation:fadeIn .22s ease;}
 .section.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.progress{width:100%;height:12px;background:#18263d;border-radius:999px;overflow:hidden;margin-top:12px;}
-.progress span{display:block;height:100%;background:linear-gradient(90deg,#00bfff,#f4c95d);}
-.live{color:#6fffb0;font-size:13px;margin-top:10px;}
-.step{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid #1d2d47;}
-.step-number{width:36px;height:36px;border-radius:12px;background:#f4c95d;color:#08101f;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
-.integration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.integration{background:#101b31;border:1px solid #263a5e;padding:18px;border-radius:16px;text-align:center;color:#dbe8ff;font-weight:700;}
-.quote{background:#101b31;border:1px solid #263a5e;padding:20px;border-radius:18px;color:#dbe8ff;line-height:1.6;}
-.map{min-height:270px;background:radial-gradient(circle at 54% 45%,rgba(244,201,93,.22),transparent 10%),radial-gradient(circle at 48% 40%,rgba(0,191,255,.28),transparent 13%),linear-gradient(135deg,#0b1628,#061020);border:1px solid #263a5e;border-radius:20px;position:relative;overflow:hidden;}
-.map::before{content:"CEE PILOT RISK VIEW";position:absolute;top:20px;left:20px;color:#f4c95d;font-weight:800;letter-spacing:1px;}
-.map-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:#ff4d5d;box-shadow:0 0 22px #ff4d5d;animation:blink 1.2s infinite;}
-.dot1{top:42%;left:52%;}.dot2{top:47%;left:56%;}.dot3{top:36%;left:49%;}.dot4{top:55%;left:59%;}
-@keyframes blink{0%{opacity:.35;transform:scale(.85);}50%{opacity:1;transform:scale(1.25);}100%{opacity:.35;transform:scale(.85);}}
-.attack-box{min-height:300px;background:radial-gradient(circle at center,rgba(0,191,255,.20),transparent 36%),linear-gradient(135deg,#0b1628,#061020);border:1px solid #263a5e;border-radius:20px;padding:22px;position:relative;overflow:hidden;}
-.attack-box::after{content:"";position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,77,93,.35),transparent);animation:sweep 2.2s infinite;}
-.attack-line{height:3px;background:linear-gradient(90deg,transparent,#ff4d5d,#00bfff,transparent);margin:28px 0;animation:pulse 1s infinite;}
-@keyframes pulse{0%{opacity:.25;}50%{opacity:1;}100%{opacity:.25;}}
-@keyframes sweep{0%{left:-40%;}100%{left:110%;}}
-.report-box{background:#08101f;border:1px solid #243654;border-radius:16px;padding:18px;margin-top:18px;white-space:pre-line;line-height:1.7;color:#d9e6ff;}
-input,textarea,select{width:100%;background:#08101f;border:1px solid #223657;border-radius:12px;padding:12px;color:white;margin-bottom:14px;}
-textarea{min-height:190px;resize:vertical;}
-.footer{margin-top:35px;color:#7185a8;font-size:12px;line-height:1.5;}
-.small{font-size:12px;color:#7185a8;line-height:1.5;margin-top:10px;}
-ul.clean{margin-left:18px;color:#92a8ca;font-size:13px;line-height:1.8;}
-.parser-output{background:#08101f;border:1px solid #243654;border-radius:16px;padding:16px;margin-top:16px;color:#d9e6ff;line-height:1.6;}
-@media(max-width:1100px){.grid,.grid-3,.integration-grid{grid-template-columns:repeat(2,1fr);}.content{grid-template-columns:1fr;}}
-@media(max-width:700px){.app{grid-template-columns:1fr;}.grid,.grid-3,.integration-grid{grid-template-columns:1fr;}.topbar h2{font-size:28px;}}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px;}
+.card{background:linear-gradient(180deg,rgba(12,25,45,.94),rgba(6,15,29,.96));border:1px solid rgba(142,166,202,.23);border-radius:16px;padding:20px;box-shadow:0 20px 40px rgba(0,0,0,.28);}
+.card h3{color:var(--gold);font-size:17px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.45px;}
+.card .label{font-size:12px;color:#cfdbef;text-transform:uppercase;font-weight:800;letter-spacing:.4px;margin-bottom:10px;}
+.metric{font-size:36px;font-weight:900;color:var(--gold);line-height:1.05;}
+.metric.red{color:var(--red)}.metric.green{color:var(--green)}.metric.blue{color:var(--blue)}
+.hint,.small{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px;}
+.main-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(360px,.85fr);gap:18px;align-items:start;}
+.parser-steps{display:flex;align-items:center;gap:12px;margin:12px 0 18px;flex-wrap:wrap;}
+.step-pill{display:flex;align-items:center;gap:10px;color:#e8f0ff;font-size:14px;}
+.step-num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#071120;font-weight:900;box-shadow:0 0 22px rgba(244,201,93,.22);}
+.step-line{width:42px;height:1px;background:rgba(244,201,93,.55);}
+.upload-box{position:relative;border:1px dashed rgba(244,201,93,.78);border-radius:16px;background:rgba(5,13,27,.72);padding:28px;margin-top:16px;display:grid;grid-template-columns:94px 1fr auto;align-items:center;gap:18px;min-height:132px;transition:.2s;}
+.upload-box.drag{border-color:var(--green);background:rgba(16,54,38,.35);}
+.upload-icon{font-size:52px;color:#dbe7ff;opacity:.9;text-align:center;}
+.file-input{display:none;}
+.button,.file-label{background:linear-gradient(180deg,var(--gold2),var(--gold));border:none;color:#06101f;padding:12px 18px;border-radius:10px;font-weight:900;cursor:pointer;display:inline-block;text-align:center;box-shadow:0 8px 20px rgba(244,201,93,.13);}
+.button.secondary{background:#0d1a2e;color:#dbe7ff;border:1px solid rgba(142,166,202,.4);box-shadow:none;}
+.button.ghost{background:transparent;color:var(--gold);border:1px solid rgba(244,201,93,.7);box-shadow:none;}
+.button:hover,.file-label:hover{filter:brightness(1.08);}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+textarea,input,select{width:100%;background:#06101e;border:1px solid var(--line);border-radius:12px;padding:12px;color:white;margin-bottom:12px;outline:none;}
+textarea{min-height:150px;resize:vertical;}
+.table{width:100%;border-collapse:collapse;margin-top:14px;overflow:hidden;border-radius:12px;}
+.table th{text-align:left;color:#b8c9e5;font-size:12px;padding:12px;border-bottom:1px solid rgba(142,166,202,.24);background:rgba(8,18,34,.72);}
+.table td{padding:12px;border-bottom:1px solid rgba(142,166,202,.16);font-size:13px;line-height:1.45;vertical-align:top;}
+.badge{padding:6px 10px;border-radius:8px;font-size:12px;font-weight:900;display:inline-block;text-transform:uppercase;}
+.critical{background:rgba(255,77,93,.18);color:#ffcbd1;border:1px solid rgba(255,77,93,.35);}
+.high{background:rgba(255,128,65,.18);color:#ffd8c3;border:1px solid rgba(255,128,65,.35);}
+.medium{background:rgba(244,201,93,.18);color:#ffe9a8;border:1px solid rgba(244,201,93,.35);}
+.low{background:rgba(56,224,123,.14);color:#b9ffd5;border:1px solid rgba(56,224,123,.35);}
+.info{background:rgba(77,141,255,.18);color:#cfe0ff;border:1px solid rgba(77,141,255,.35);}
+.output{background:rgba(5,12,24,.82);border:1px solid rgba(142,166,202,.24);border-radius:14px;padding:16px;margin-top:14px;color:#dce8ff;line-height:1.6;}
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(142,166,202,.25);border-radius:14px;overflow:hidden;margin-top:14px;}
+.result-box{padding:16px;text-align:center;background:rgba(7,17,31,.65);border-right:1px solid rgba(142,166,202,.18);}
+.result-box:last-child{border-right:none;}
+.result-box span{display:block;color:#b8c9e5;font-size:12px;margin-bottom:8px;}
+.result-box strong{font-size:26px;color:var(--gold);}
+.validation-list{display:grid;gap:18px;}
+.validation-item{display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;}
+.validation-icon{font-size:30px;color:var(--gold);}
+.validation-item b{color:var(--gold);display:block;margin-bottom:6px;}
+.validation-item p{color:#d5e1f6;font-size:14px;line-height:1.45;}
+.checks{display:grid;gap:10px;margin-top:10px;}
+.checks div{font-size:14px;color:#dce8ff;line-height:1.45;}
+.checks span{color:var(--green);font-weight:900;margin-right:8px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.progress{height:11px;background:#17273f;border-radius:999px;overflow:hidden;margin-top:12px;}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--gold));}
+.footer{text-align:center;color:#7588a8;font-size:12px;margin-top:22px;}
+ul.clean{margin-left:18px;color:#cbd8ef;font-size:14px;line-height:1.8;}
+@media(max-width:1250px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.main-grid,.grid-2{grid-template-columns:1fr}.hero{padding-right:0}.upload-box{grid-template-columns:1fr;text-align:center}.sidebar{position:relative;height:auto}.app{grid-template-columns:1fr}.side-card{display:none}}
+@media(max-width:760px){.main{padding:22px}.hero h2{font-size:32px}.hero p{font-size:15px}.kpi-grid,.grid-3,.grid-4{grid-template-columns:1fr}.lang-switch{right:18px;top:16px}.result-grid{grid-template-columns:1fr}.result-box{border-right:none;border-bottom:1px solid rgba(142,166,202,.18)}}
 </style>
 </head>
-
 <body>
+<div class="lang-switch"><button id="plBtn" onclick="setLang('PL')">PL</button><button id="enBtn" class="active" onclick="setLang('EN')">EN</button></div>
 <div class="app">
-
 <aside class="sidebar">
-<div class="logo">
-<img src="./Logo.jpg" alt="KulaGuard AI Logo">
-<h1>KulaGuard AI</h1>
-<p id="sideSubtitle">AI governance and Shadow AI visibility for regulated organizations</p>
-</div>
-
-<div class="nav">
-<button class="active" onclick="showSection('dashboard',this)">Dashboard</button>
-<button onclick="showSection('parser',this)">Log Parser MVP</button>
-<button onclick="showSection('how',this)">How It Works</button>
-<button onclick="showSection('mvp',this)">MVP Status</button>
-<button onclick="showSection('validation',this)">Traction Plan</button>
-<button onclick="showSection('integrations',this)">Integrations</button>
-<button onclick="showSection('shadow',this)">Shadow AI Radar</button>
-<button onclick="showSection('compliance',this)">NIS2 / AI Act</button>
-<button onclick="showSection('shield',this)">Adversarial AI Shield</button>
-<button onclick="showSection('market',this)">Market Opportunity</button>
-<button onclick="showSection('about',this)">Founder</button>
-<button onclick="showSection('report',this)">Executive Report</button>
-</div>
+  <div class="logo">
+    <img src="./Logo.jpg" alt="KulaGuard AI Logo">
+    <h1>KulaGuard AI</h1>
+    <p id="sideSubtitle">AI governance and Shadow AI visibility for regulated organizations</p>
+  </div>
+  <div class="nav">
+    <button class="active" onclick="showSection('overview',this)"><span class="ico">▦</span>Overview</button>
+    <button onclick="showSection('parser',this)"><span class="ico">◈</span>Log Parser Demo</button>
+    <button onclick="showSection('how',this)"><span class="ico">⌁</span>How It Works</button>
+    <button onclick="showSection('mvp',this)"><span class="ico">◉</span>MVP Status</button>
+    <button onclick="showSection('traction',this)"><span class="ico">✦</span>Traction & Pilot</button>
+    <button onclick="showSection('compliance',this)"><span class="ico">⚖</span>Risk & Compliance</button>
+    <button onclick="showSection('shield',this)"><span class="ico">◇</span>Adversarial AI Shield</button>
+    <button onclick="showSection('market',this)"><span class="ico">▥</span>Market Opportunity</button>
+    <button onclick="showSection('about',this)"><span class="ico">♙</span>About Founder</button>
+    <button onclick="showSection('report',this)"><span class="ico">▤</span>Executive Report</button>
+  </div>
+  <div class="side-card">
+    <h3>MVP Build Active</h3>
+    <p>• Parser: Browser / Microsoft 365<br>• 50+ AI tools mapped<br>• Pilot validation: 30-60 days</p>
+  </div>
 </aside>
 
 <main class="main">
+  <div class="hero">
+    <h2 id="topTitle">KulaGuard AI - MVP Investor Preview</h2>
+    <p id="topSubtitle">AI governance and Shadow AI visibility for regulated infrastructure, OT/IT and enterprise security teams.</p>
+  </div>
 
-<div class="topbar">
-<div style="display:flex;align-items:center;gap:14px;">
-<img src="./Logo.jpg" style="width:52px;height:52px;border-radius:14px;object-fit:cover;border:2px solid #f4c95d;" alt="KulaGuard AI">
-<div>
-<h2 id="topTitle">KulaGuard AI MVP Investor Preview</h2>
-<p id="topSubtitle">Shadow AI visibility, log parsing and AI governance workflow for regulated infrastructure, OT/IT and enterprise security teams.</p>
-</div>
-</div>
+  <section id="overview" class="section active">
+    <div class="kpi-grid">
+      <div class="card"><div class="label">AI Tools Mapped</div><div class="metric">50+</div><div class="hint">AI tools and services in live detection catalogue.</div></div>
+      <div class="card"><div class="label">Data Sources</div><div class="metric blue">4</div><div class="hint">Browser/proxy logs, Microsoft 365 audit logs, endpoint events, cloud/SaaS telemetry.</div></div>
+      <div class="card"><div class="label">Risk Scoring Engine</div><div class="metric red">Active</div><div class="hint">Classification of tools, uploads, departments and ownership gaps.</div></div>
+      <div class="card"><div class="label">Pilot Target</div><div class="metric green">30-60d</div><div class="hint">First validation window for controlled pilot.</div></div>
+      <div class="card"><div class="label">Compliance Focus</div><div class="metric">NIS2<br>AI Act</div><div class="hint">Governance, risk and evidence mapping.</div></div>
+    </div>
 
-<div>
-<button class="lang-btn" onclick="toggleLang()">PL / EN</button>
-<div class="status" id="statusBox">
-MVP build active<br>
-Browser / M365 parser included<br>
-Pilot validation target: 30-60 days
-</div>
-</div>
-</div>
+    <div class="main-grid">
+      <div class="card">
+        <h3>Log Parser Demo - Working Detection</h3>
+        <div class="parser-steps"><div class="step-pill"><span class="step-num">1</span>Upload Logs</div><span class="step-line"></span><div class="step-pill"><span class="step-num">2</span>Parse & Detect</div><span class="step-line"></span><div class="step-pill"><span class="step-num">3</span>Risk Classification</div><span class="step-line"></span><div class="step-pill"><span class="step-num">4</span>Results</div></div>
+        <p class="hint">Upload browser/proxy logs or Microsoft 365 audit logs. The parser detects AI tools, classifies risk and generates a summary.</p>
+        <div id="dropZone" class="upload-box">
+          <div class="upload-icon">⇧</div>
+          <div><b>Drag & drop your log file here</b><div class="small">CSV, TXT, LOG or JSON. Local browser processing for demo.</div></div>
+          <div><label class="file-label" for="csvUpload">Choose File</label><input class="file-input" type="file" id="csvUpload" accept=".csv,.txt,.log,.json" onchange="handleFileUpload(event)"></div>
+        </div>
+        <div class="actions"><button class="button secondary" onclick="loadSampleLogs('browser')">Sample Browser Logs</button><button class="button secondary" onclick="loadSampleLogs('m365')">Sample Microsoft 365 Audit Logs</button><button class="button secondary" onclick="loadSampleLogs('proxy')">Sample Proxy Logs</button><button class="button" onclick="parseLogs()">Run Detection</button></div>
+        <textarea id="logInput" style="margin-top:14px;display:none;"></textarea>
+        <div id="parserSummary" class="output">Detection engine ready. Upload logs or load a sample file.</div>
+        <h3 style="margin-top:22px;">Detection Results</h3>
+        <table class="table" id="parserTable"><tr><th>Tool / Service</th><th>Category</th><th>Risk Level</th><th>Detections</th><th>Users</th><th>Last Seen</th></tr></table>
+        <div class="result-grid"><div class="result-box"><span>Total Detections</span><strong id="rTotal">0</strong></div><div class="result-box"><span>Unique AI Tools</span><strong id="rTools">0</strong></div><div class="result-box"><span>Users Involved</span><strong id="rUsers">0</strong></div><div class="result-box"><span>Overall Risk Score</span><strong id="rRisk" style="color:var(--red)">0 / 100</strong></div></div>
+        <div class="small">🔒 Parsing is performed locally in the browser. No data is uploaded to any server in this preview.</div>
+      </div>
 
-<div class="notice" id="noticeBox">
-KulaGuard AI detects unmanaged AI usage from browser/proxy and Microsoft 365 audit logs, maps risk ownership, and turns Shadow AI exposure into executive-ready governance reports for regulated organizations.
-</div>
+      <div class="validation-list">
+        <div class="card">
+          <h3>Traction & Validation Plan</h3>
+          <div class="validation-item"><div class="validation-icon">◌</div><div><b>Pilot conversations in progress</b><p>Initial discussions can focus on energy, transport, logistics and manufacturing organizations in CEE.</p></div></div>
+          <div class="validation-item"><div class="validation-icon">◎</div><div><b>Seeking 2 design partners</b><p>Target: regulated organizations willing to validate Shadow AI visibility on approved telemetry.</p></div></div>
+          <div class="validation-item"><div class="validation-icon">▣</div><div><b>LOI / PoC track</b><p>Goal: secure 1-2 LOIs and complete first paid PoC after validated findings.</p></div></div>
+          <button class="button ghost" onclick="showSection('report',document.querySelectorAll('.nav button')[9])">Generate Executive Report</button>
+        </div>
+        <div class="card">
+          <h3>Why KulaGuard AI</h3>
+          <div class="checks"><div><span>✓</span>Built for regulated and critical environments</div><div><span>✓</span>Focus on AI governance, not just discovery</div><div><span>✓</span>Executive reporting with business context</div><div><span>✓</span>Designed for NIS2 and AI Act readiness</div><div><span>✓</span>Founder with security and operational background</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="dashboard" class="section active">
-<div class="grid">
-<div class="card"><h3 id="m1">AI Tools Mapped</h3><div class="metric">50+</div><div class="hint" id="h1">AI service catalogue for browser, SaaS, endpoint and M365 telemetry detection.</div></div>
-<div class="card"><h3 id="m2">Shadow AI Risk</h3><div class="metric red">High</div><div class="hint" id="h2">Risk classification for unauthorized AI tools, sensitive uploads and unmanaged agents.</div></div>
-<div class="card"><h3 id="m3">NIS2 Readiness View</h3><div class="metric">58%</div><div class="progress"><span style="width:58%"></span></div><div class="small">Example score generated from the assessment workflow.</div></div>
-<div class="card"><h3 id="m4">AI Act Control View</h3><div class="metric">64%</div><div class="progress"><span style="width:64%"></span></div><div class="small">Example score generated from governance control mapping.</div></div>
-</div>
+  <section id="parser" class="section">
+    <div class="card"><h3>Working Log Parser</h3><p class="hint">Use the parser below to test browser history, proxy, DNS, CSV, TXT, JSON or Microsoft 365 audit exports.</p><div class="main-grid" style="margin-top:14px;"><div><div class="upload-box"><div class="upload-icon">⇧</div><div><b>Upload file or paste raw telemetry below</b><div class="small">Supported: CSV, TXT, LOG, JSON.</div></div><label class="file-label" for="csvUpload2">Choose File</label><input class="file-input" type="file" id="csvUpload2" accept=".csv,.txt,.log,.json" onchange="handleFileUpload(event)"></div><textarea id="manualInput" placeholder="Paste logs here..."></textarea><div class="actions"><button class="button" onclick="copyManualAndParse()">Run Detection</button><button class="button secondary" onclick="loadSampleLogs('m365')">Load Sample</button></div></div><div><div class="output" id="parserSummary2">Ready for manual analysis.</div></div></div></div>
+  </section>
 
-<div class="grid">
-<div class="card"><h3 id="m5">Financial Exposure</h3><div class="metric red">Risk Model</div><div class="hint" id="h5">Configurable business impact view for breach, audit and compliance exposure.</div></div>
-<div class="card"><h3 id="m6">Parser MVP</h3><div class="metric blue">Active</div><div class="hint" id="h6">Client-side browser/M365 log parser included in this demo for MVP validation.</div></div>
-<div class="card"><h3 id="m7">Telemetry Scope</h3><div class="metric blue">M365+</div><div class="hint" id="h7">Initial MVP scope: browser history, proxy exports, M365 audit logs and endpoint events.</div></div>
-<div class="card"><h3 id="m8">Pilot Objective</h3><div class="metric green">30-60d</div><div class="hint" id="h8">Target: controlled pilot with authorized telemetry and executive report output.</div></div>
-</div>
+  <section id="how" class="section"><div class="card"><h3>How KulaGuard AI Works</h3><div class="grid-3"><div class="card"><div class="metric">1</div><h3>Connect Telemetry</h3><p class="hint">Browser/proxy, Microsoft 365 audit logs, endpoint and SIEM exports.</p></div><div class="card"><div class="metric">2</div><h3>Detect Shadow AI</h3><p class="hint">Identify public AI tools, copilots, agents, file uploads and unmanaged usage.</p></div><div class="card"><div class="metric">3</div><h3>Report Risk</h3><p class="hint">Generate executive-ready evidence, ownership mapping and remediation actions.</p></div></div></div></section>
 
-<div class="content">
-<div class="card">
-<h3>AI Security Events - Assessment Example</h3>
-<table class="table">
-<tr><th>Event</th><th>Source</th><th>Risk</th></tr>
-<tr><td>Confidential file uploaded to public AI tool</td><td>Endpoint log sample</td><td><span class="badge critical">CRITICAL</span></td></tr>
-<tr><td>Unauthorized Copilot plugin detected</td><td>M365 audit sample</td><td><span class="badge high">HIGH</span></td></tr>
-<tr><td>Local LLM activity identified</td><td>Engineering workstation sample</td><td><span class="badge high">HIGH</span></td></tr>
-<tr><td>AI usage policy missing for operations team</td><td>Governance control check</td><td><span class="badge medium">MEDIUM</span></td></tr>
-</table>
-</div>
+  <section id="mvp" class="section"><div class="grid-4"><div class="card"><div class="label">Current Stage</div><div class="metric blue">MVP Build</div><p class="hint">Parser and risk scoring represented in the demo.</p></div><div class="card"><div class="label">Next Milestone</div><div class="metric green">Pilot Ready</div><p class="hint">Backend-assisted detection for approved telemetry.</p></div><div class="card"><div class="label">Pilot Target</div><div class="metric">1-2</div><p class="hint">Controlled pilots or LOIs in regulated sectors.</p></div><div class="card"><div class="label">Commercial Goal</div><div class="metric">LOI + PoC</div><p class="hint">Convert validation into paid assessment.</p></div></div><div class="card" style="margin-top:18px"><h3>60-Day MVP-to-Pilot Plan</h3><table class="table"><tr><th>Phase</th><th>Deliverable</th><th>Status</th></tr><tr><td>Days 1-14</td><td>Browser/proxy/Microsoft 365 parser and event classification</td><td><span class="badge medium">In Progress</span></td></tr><tr><td>Days 15-30</td><td>Risk scoring for tools, uploads, departments and ownership gaps</td><td><span class="badge info">Next</span></td></tr><tr><td>Days 31-45</td><td>Controlled pilot using authorized telemetry</td><td><span class="badge info">Target</span></td></tr><tr><td>Days 46-60</td><td>Case study, LOI request, executive report and commercial PoC package</td><td><span class="badge info">Target</span></td></tr></table></div></section>
 
-<div class="card">
-<h3>Pilot Risk View</h3>
-<div class="map"><div class="map-dot dot1"></div><div class="map-dot dot2"></div><div class="map-dot dot3"></div><div class="map-dot dot4"></div></div>
-<div class="small">Customer pilots should use authorized telemetry only. The current view demonstrates the executive reporting format.</div>
-</div>
-</div>
-</section>
+  <section id="traction" class="section"><div class="kpi-grid"><div class="card"><div class="label">Design Partners</div><div class="metric">Seeking 2</div><p class="hint">Regulated organizations for approved telemetry validation.</p></div><div class="card"><div class="label">Pilot Conversations</div><div class="metric green">In Progress</div><p class="hint">Energy, transport, logistics and manufacturing focus.</p></div><div class="card"><div class="label">Mapped AI Tools</div><div class="metric">50+</div><p class="hint">Detection catalogue for LLM, agent and AI productivity tools.</p></div><div class="card"><div class="label">Pilot Window</div><div class="metric blue">30-60d</div><p class="hint">Short validation cycle.</p></div><div class="card"><div class="label">Target Ask</div><div class="metric">1M PLN</div><p class="hint">Pre-seed capital for MVP backend, pilots and sales validation.</p></div></div><div class="grid-3"><div class="card"><h3>Design Partner Track</h3><p class="hint">Validate browser/proxy or Microsoft 365 telemetry under controlled conditions.</p></div><div class="card"><h3>Pilot Track</h3><p class="hint">Answer: which AI tools are used, by whom, and with what business risk?</p></div><div class="card"><h3>LOI / PoC Track</h3><p class="hint">Request LOI, paid PoC or strategic advisory support after validated findings.</p></div></div></section>
 
-<section id="parser" class="section">
-<div class="content">
-<div class="card">
-<h3>Browser / M365 Log Parser MVP</h3>
-<div class="hint">Paste browser history, proxy export, DNS log, CSV-like M365 audit data or raw text containing URLs/domains. The parser detects known AI tools, counts events and assigns simple risk levels.</div>
-<input type="file" id="csvUpload" accept=".csv,.txt,.log" onchange="handleFileUpload(event)">
-<div class="small">Upload CSV, TXT or LOG export from browser history, proxy, DNS or Microsoft 365 audit data. The file is processed locally in the browser for this demo.</div>
-<textarea id="logInput">2026-05-07T09:12:11Z,user1@company.com,Visited,chat.openai.com,Finance Team
-2026-05-07T09:18:44Z,user2@company.com,FileUpload,claude.ai,Legal Team,contract_draft.pdf
-2026-05-07T10:03:02Z,user3@company.com,Visited,copilot.microsoft.com,Operations
-2026-05-07T10:22:18Z,user4@company.com,Visited,gemini.google.com,Engineering
-2026-05-07T11:10:39Z,user5@company.com,Visited,perplexity.ai,Sales</textarea>
-<button class="button" onclick="parseLogs()">Run Detection</button>
-<button class="button" onclick="loadSampleLogs()">Load Sample</button>
-<div id="parserSummary" class="parser-output">Detection engine ready. Upload CSV/TXT/LOG or paste telemetry and click Run Detection.</div>
-</div>
+  <section id="compliance" class="section"><div class="grid-4"><div class="card"><h3>AI Policy</h3><div class="metric red">Gap</div><p class="hint">Detects missing or incomplete corporate AI usage policy.</p></div><div class="card"><h3>AI Asset Register</h3><div class="metric">Model</div><p class="hint">Maps tools, owners, departments and approval status.</p></div><div class="card"><h3>Risk Matrix</h3><div class="metric green">Ready</div><p class="hint">Executive structure for risk ownership and remediation.</p></div><div class="card"><h3>Audit Evidence</h3><div class="metric red">Gap</div><p class="hint">Highlights missing evidence before audit or board review.</p></div></div></section>
 
-<div class="card">
-<h3>MVP Detection Logic</h3>
-<ul class="clean">
-<li>Upload CSV/TXT/LOG files or paste raw browser, proxy, DNS or M365 audit telemetry.</li>
-<li>Detects 50+ mapped AI services and domains.</li>
-<li>Flags file uploads to public AI tools as critical risk.</li>
-<li>Maps users, departments, domains, event counts and risk level.</li>
-<li>Creates pilot-ready evidence for an executive report.</li>
-<li>Generates working detection output inside the investor preview.</li>
-</ul>
-<div class="small">The current detector runs locally in the browser for preview purposes. Production deployment should use approved telemetry ingestion, authentication, logging, encryption and tenant isolation.</div>
-</div>
-</div>
+  <section id="shield" class="section"><div class="main-grid"><div class="card"><h3>Adversarial AI Shield</h3><p class="hint">Roadmap module for AI-enabled phishing, prompt injection, data leakage and policy bypass testing.</p><table class="table"><tr><th>Scenario</th><th>Status</th><th>Risk</th></tr><tr><td>Prompt injection</td><td>Roadmap</td><td><span class="badge high">High</span></td></tr><tr><td>Public AI data leakage</td><td>Parser-supported</td><td><span class="badge critical">Critical</span></td></tr><tr><td>AI phishing</td><td>Roadmap</td><td><span class="badge high">High</span></td></tr></table></div><div class="card"><h3>Threat Scenario Level</h3><div class="metric red">78 / 100</div><div class="progress"><span style="width:78%"></span></div><p class="hint">Scenario score for executive readiness discussion.</p></div></div></section>
 
-<div class="card">
-<h3>Working Detection Output</h3>
-<table class="table" id="parserTable">
-<tr><th>Domain</th><th>Tool</th><th>Events</th><th>Risk</th></tr>
-</table>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</section>
+  <section id="market" class="section"><div class="grid-3"><div class="card"><h3>Market Theme</h3><div class="metric">AI Risk</div><p class="hint">Organizations adopt AI faster than governance and security teams can control it.</p></div><div class="card"><h3>Regulatory Pressure</h3><div class="metric">NIS2</div><p class="hint">Critical and important entities face stronger cyber governance expectations.</p></div><div class="card"><h3>Initial Beachhead</h3><div class="metric">CEE</div><p class="hint">Regulated infrastructure, manufacturing, transport and enterprise security teams.</p></div></div></section>
 
-<section id="how" class="section">
-<div class="card">
-<h3>How KulaGuard AI Works</h3>
-<div class="step"><div class="step-number">1</div><div><h3>Connect Approved Telemetry</h3><div class="hint">Connect browser/proxy logs, Microsoft 365 audit logs, endpoint telemetry and SIEM exports where permitted by the client.</div></div></div>
-<div class="step"><div class="step-number">2</div><div><h3>Discover AI Usage</h3><div class="hint">Identify access to ChatGPT, Copilot, Gemini, Claude, Perplexity, local LLMs and AI agent tools.</div></div></div>
-<div class="step"><div class="step-number">3</div><div><h3>Classify Shadow AI Risk</h3><div class="hint">Classify unauthorized tools, risky prompts, unmanaged uploads and missing ownership.</div></div></div>
-<div class="step"><div class="step-number">4</div><div><h3>Map Compliance Evidence</h3><div class="hint">Generate AI asset register, policy gaps, risk matrix and evidence pack structure for NIS2 and AI governance discussions.</div></div></div>
-<div class="step"><div class="step-number">5</div><div><h3>Report to Executives</h3><div class="hint">Produce a board-level report with findings, remediation actions and risk ownership.</div></div></div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</div>
-</section>
+  <section id="about" class="section"><div class="card"><h3>Founder</h3><div class="grid-2"><div><h2 style="color:var(--gold);font-size:30px;margin-bottom:12px;">Krystian Kula</h2><p class="hint" style="font-size:15px">Founder of KulaGuard AI with operational background in security, critical infrastructure protection and enterprise security operations. Former Police Criminal Division officer and Regional Security Manager within Google security operations across Poland. Currently Head of Operations at TomFit AG, focused on AI implementation, LLM automation and secure operational workflows.</p></div><div class="card"><h3>Founder-Market Fit</h3><ul class="clean"><li>Security operations background</li><li>Critical infrastructure and crisis response exposure</li><li>Enterprise operational security experience</li><li>AI implementation and automation focus</li></ul></div></div></div></section>
 
-<section id="mvp" class="section">
-<div class="grid">
-<div class="card"><h3>Current Stage</h3><div class="metric blue">MVP Build</div><div class="hint">Telemetry parser, AI domain detection and executive reporting workflow are now represented in the demo.</div></div>
-<div class="card"><h3>Next Milestone</h3><div class="metric green">Pilot Ready</div><div class="hint">Convert client-side parser into backend-assisted Shadow AI detector for browser/proxy and M365 logs.</div></div>
-<div class="card"><h3>Pilot Target</h3><div class="metric">1-2</div><div class="hint">Controlled pilots or LOIs in energy, transport, manufacturing or regulated enterprise environments.</div></div>
-<div class="card"><h3>Commercial Goal</h3><div class="metric">LOI + PoC</div><div class="hint">Convert validation into letter of intent, paid assessment or commercial proof-of-concept.</div></div>
-</div>
+  <section id="report" class="section"><div class="card"><h3>Executive Report Generator</h3><div class="grid-2"><div><input id="companyName" placeholder="Company Name" value="Pilot Client Environment"><select id="sector"><option>Energy</option><option>Manufacturing</option><option>Transport</option><option>Financial Services</option><option>Critical Infrastructure</option></select><input id="exposure" placeholder="Estimated Financial Exposure" value="Calculated after pilot data review"><input id="reduction" placeholder="Risk Reduction Target" value="Reduce unmanaged AI usage through visibility, policy and ownership"><textarea id="notes">Assessment identified unmanaged AI tool access, incomplete AI governance controls, public AI upload risk and Shadow AI ownership gaps.</textarea><div class="actions"><button class="button" onclick="generateReport()">Generate Report</button><button class="button secondary" onclick="copyReport()">Copy Report</button><button class="button ghost" onclick="exportPDF()">Export PDF</button></div></div><div><div id="reportBox" class="output">Click Generate Report</div></div></div></div></section>
 
-<div class="content">
-<div class="card">
-<h3>60-Day MVP-to-Pilot Plan</h3>
-<table class="table">
-<tr><th>Phase</th><th>Deliverable</th><th>Status</th></tr>
-<tr><td>Days 1-14</td><td>Browser/proxy/M365 parser for AI domains and event classification</td><td><span class="badge medium">In Progress</span></td></tr>
-<tr><td>Days 15-30</td><td>Risk scoring for tools, uploads, departments and ownership gaps</td><td><span class="badge info">Next</span></td></tr>
-<tr><td>Days 31-45</td><td>Controlled pilot with authorized telemetry from one organization</td><td><span class="badge info">Target</span></td></tr>
-<tr><td>Days 46-60</td><td>Case study, LOI request, executive report and commercial PoC package</td><td><span class="badge info">Target</span></td></tr>
-</table>
-</div>
-<div class="card">
-<h3>Strategic Validation Ask</h3>
-<div class="hint">KulaGuard AI should be presented as a focused MVP seeking pilot validation, not as a mature production platform.</div>
-<ul class="clean">
-<li>Access to one controlled pilot environment in energy, transport or regulated enterprise sector.</li>
-<li>Permission to process approved browser/proxy or M365 audit telemetry.</li>
-<li>Feedback from security, compliance and executive stakeholders.</li>
-<li>LOI or paid PoC discussion after successful pilot findings.</li>
-</ul>
-</div>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</section>
-
-<section id="validation" class="section">
-<div class="grid">
-<div class="card"><h3>Design Partners</h3><div class="metric">Seeking 2</div><div class="hint">Targeting regulated organizations willing to validate Shadow AI visibility on approved telemetry.</div></div>
-<div class="card"><h3>Pilot Conversations</h3><div class="metric green">In Progress</div><div class="hint">Positioned for early discussions with energy, transport, logistics and manufacturing stakeholders.</div></div>
-<div class="card"><h3>AI Tools Mapped</h3><div class="metric">50+</div><div class="hint">Detection catalogue for public AI tools, coding assistants, agent platforms and LLM services.</div></div>
-<div class="card"><h3>Pilot Window</h3><div class="metric blue">30-60d</div><div class="hint">Short validation cycle focused on telemetry parsing, risk scoring and executive reporting.</div></div>
-</div>
-
-<div class="grid-3">
-<div class="quote">Design Partner Track<br><br><span class="hint">Seeking first regulated organizations to test browser/proxy or Microsoft 365 audit telemetry under controlled conditions.</span></div>
-<div class="quote">Pilot Track<br><br><span class="hint">Initial pilot conversations can focus on one narrow question: which AI tools are being used, by whom, and with what business risk?</span></div>
-<div class="quote">LOI / PoC Track<br><br><span class="hint">After successful findings: request LOI, paid PoC or strategic advisory support based on validated value.</span></div>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</section>
-
-<section id="integrations" class="section">
-<div class="card">
-<h3>Planned Integrations</h3>
-<div class="integration-grid">
-<div class="integration">Microsoft 365</div><div class="integration">Azure AD / Entra ID</div><div class="integration">Okta</div><div class="integration">Proxy Logs</div>
-<div class="integration">CrowdStrike</div><div class="integration">SentinelOne</div><div class="integration">SIEM Export</div><div class="integration">Browser Logs</div>
-</div>
-<div class="small">Industrial/OT integrations such as Siemens, Schneider Electric and Nozomi should remain later-stage roadmap items until the first IT/M365 pilot is validated.</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</div>
-</section>
-
-<section id="shadow" class="section">
-<div class="card">
-<h3>Shadow AI Radar - Detection Example</h3>
-<table class="table">
-<tr><th>Tool</th><th>Status</th><th>Risk</th><th>Action</th></tr>
-<tr><td>ChatGPT</td><td>Unapproved in sensitive department</td><td><span class="badge critical">CRITICAL</span></td><td><button class="button" onclick="blockTool(this)">Mark Contained</button></td></tr>
-<tr><td>Claude</td><td>Unknown owner</td><td><span class="badge high">HIGH</span></td><td><button class="button" onclick="blockTool(this)">Mark Contained</button></td></tr>
-<tr><td>Gemini</td><td>Not reviewed</td><td><span class="badge medium">MEDIUM</span></td><td><button class="button" onclick="blockTool(this)">Review</button></td></tr>
-<tr><td>Local LLM</td><td>Unmanaged model</td><td><span class="badge high">HIGH</span></td><td><button class="button" onclick="blockTool(this)">Mark Contained</button></td></tr>
-<tr><td>AI Agent</td><td>Unmanaged automation</td><td><span class="badge critical">CRITICAL</span></td><td><button class="button" onclick="blockTool(this)">Disable</button></td></tr>
-</table>
-<div class="small">Assessment example. Production use requires authorized client telemetry and validated detection rules.</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</div>
-</section>
-
-<section id="compliance" class="section">
-<div class="grid">
-<div class="card"><h3>AI Policy</h3><div class="metric red">Gap</div><div class="hint">Detects missing or incomplete corporate AI usage policy.</div></div>
-<div class="card"><h3>AI Asset Register</h3><div class="metric">Model</div><div class="hint">Maps tools, owners, departments and approval status.</div></div>
-<div class="card"><h3>Risk Matrix</h3><div class="metric green">Ready</div><div class="hint">Executive structure for risk ownership and remediation.</div></div>
-<div class="card"><h3>Audit Evidence</h3><div class="metric red">Gap</div><div class="hint">Highlights missing evidence before audit or board review.</div></div>
-</div>
-<div class="card">
-<h3>Compliance Positioning</h3>
-<div class="hint">KulaGuard AI does not replace legal counsel or formal audit. It provides visibility, evidence structure and executive remediation workflow for AI governance, NIS2 readiness discussions and AI Act control mapping.</div>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</section>
-
-<section id="shield" class="section">
-<div class="content">
-<div class="card">
-<h3>Adversarial AI Shield Simulation</h3>
-<div class="attack-box">
-<div class="live">● Prompt injection scenario simulated</div><div class="attack-line"></div>
-<div class="live">● Data leakage scenario simulated</div><div class="attack-line"></div>
-<div class="live">● AI phishing scenario simulated</div><div class="attack-line"></div>
-<div class="live">● OT/IT policy bypass scenario simulated</div><div class="attack-line"></div>
-<div class="hint">Roadmap module for testing AI-enabled social engineering, prompt injection, data leakage and policy bypass scenarios.</div>
-</div>
-</div>
-<div class="card"><h3>Threat Scenario Level</h3><div class="metric red">78%</div><div class="progress"><span style="width:78%"></span></div><div class="hint">Scenario score for executive preview and adversarial AI readiness discussion.</div></div>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</section>
-
-<section id="market" class="section">
-<div class="grid-3">
-<div class="card"><h3>Market Theme</h3><div class="metric">AI Risk</div><div class="hint">Organizations are adopting AI tools faster than governance, security and compliance teams can control them.</div></div>
-<div class="card"><h3>Regulatory Pressure</h3><div class="metric">NIS2</div><div class="hint">Critical and important entities face stronger cybersecurity governance, risk and reporting expectations.</div></div>
-<div class="card"><h3>Initial Beachhead</h3><div class="metric">CEE</div><div class="hint">Focus on regulated infrastructure, manufacturing, transport and enterprise security teams in Central and Eastern Europe.</div></div>
-</div>
-
-<div class="card">
-<h3>Strategic Fit</h3>
-<div class="hint">KulaGuard AI is positioned as an early-stage AI governance and Shadow AI visibility platform for regulated environments. The strongest strategic angle is not generic cybersecurity, but AI usage visibility, executive governance and compliance evidence for organizations exposed to critical infrastructure, OT/IT and board-level cyber risk.</div>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</section>
-
-<section id="about" class="section">
-<div class="card">
-<h3>Founder</h3>
-<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
-<img src="./Logo.jpg" style="width:120px;height:120px;border-radius:20px;object-fit:cover;border:2px solid #f4c95d;" alt="Founder visual">
-<div>
-<h2 style="color:#f4c95d;margin-bottom:10px;">Krystian Kula</h2>
-<p class="hint" style="max-width:900px;line-height:1.8;">
-Founder of KulaGuard AI with operational background in security, critical infrastructure protection and enterprise security operations.
-
-Former Police Criminal Division officer and Regional Security Manager within Google security operations across Poland.
-
-Experience includes crisis response, compliance operations, incident management, enterprise security operations and AI-enabled operational automation.
-
-Currently Head of Operations at TomFit AG, focused on AI implementation, LLM automation and secure operational workflows.
-
-KulaGuard AI was created to help organizations discover Shadow AI, reduce governance gaps and secure AI adoption across regulated OT and IT environments.
-</p>
-</div>
-</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</div>
-</section>
-
-<section id="report" class="section">
-<div class="card">
-<h3>Executive Report Generator</h3>
-<input id="companyName" placeholder="Company Name" value="Pilot Client Environment">
-<select id="sector"><option>Energy</option><option>Manufacturing</option><option>Transport</option><option>Financial Services</option><option>Critical Infrastructure</option></select>
-<input id="exposure" placeholder="Estimated Financial Exposure" value="Calculated after pilot data review">
-<input id="reduction" placeholder="Risk Reduction Target" value="Reduce unmanaged AI usage through visibility, policy and ownership">
-<textarea id="notes">Assessment identified unmanaged AI tool access, incomplete AI governance controls, public AI upload risk and Shadow AI ownership gaps.</textarea>
-<button class="button" onclick="generateReport()">Generate Report</button>
-<button class="button" onclick="copyReport()">Copy Report</button>
-<button class="button" onclick="exportPDF()">Export PDF</button>
-<div id="reportBox" class="report-box">Click Generate Report</div>
-<button class="button" onclick="backDashboard()">Back to Dashboard</button>
-</div>
-</section>
-
-<div class="footer">
-© 2026 KulaGuard AI | Confidential MVP Preview | Prepared for pilot and strategic evaluation only
-</div>
-
+  <div class="footer">© 2026 KulaGuard AI | Confidential MVP Preview | Prepared for pilot and strategic evaluation</div>
 </main>
 </div>
 
 <script>
 let currentLang='EN';
-
-const aiServices = [
-{domain:'chat.openai.com',tool:'ChatGPT',risk:'CRITICAL'},
-{domain:'chatgpt.com',tool:'ChatGPT',risk:'CRITICAL'},
-{domain:'openai.com',tool:'OpenAI',risk:'HIGH'},
-{domain:'claude.ai',tool:'Claude',risk:'CRITICAL'},
-{domain:'anthropic.com',tool:'Anthropic',risk:'HIGH'},
-{domain:'gemini.google.com',tool:'Gemini',risk:'HIGH'},
-{domain:'bard.google.com',tool:'Gemini',risk:'HIGH'},
-{domain:'copilot.microsoft.com',tool:'Microsoft Copilot',risk:'MEDIUM'},
-{domain:'bing.com/chat',tool:'Microsoft Copilot',risk:'MEDIUM'},
-{domain:'perplexity.ai',tool:'Perplexity',risk:'MEDIUM'},
-{domain:'poe.com',tool:'Poe',risk:'HIGH'},
-{domain:'mistral.ai',tool:'Mistral AI',risk:'HIGH'},
-{domain:'huggingface.co',tool:'Hugging Face',risk:'HIGH'},
-{domain:'replicate.com',tool:'Replicate',risk:'HIGH'},
-{domain:'midjourney.com',tool:'Midjourney',risk:'MEDIUM'},
-{domain:'stability.ai',tool:'Stability AI',risk:'MEDIUM'},
-{domain:'runwayml.com',tool:'Runway',risk:'MEDIUM'},
-{domain:'elevenlabs.io',tool:'ElevenLabs',risk:'MEDIUM'},
-{domain:'synthesia.io',tool:'Synthesia',risk:'MEDIUM'},
-{domain:'jasper.ai',tool:'Jasper',risk:'MEDIUM'},
-{domain:'copy.ai',tool:'Copy.ai',risk:'MEDIUM'},
-{domain:'writesonic.com',tool:'Writesonic',risk:'MEDIUM'},
-{domain:'notion.so/ai',tool:'Notion AI',risk:'MEDIUM'},
-{domain:'grammarly.com',tool:'Grammarly AI',risk:'LOW'},
-{domain:'deepl.com/write',tool:'DeepL Write',risk:'LOW'},
-{domain:'quillbot.com',tool:'QuillBot',risk:'LOW'},
-{domain:'you.com',tool:'You.com AI',risk:'MEDIUM'},
-{domain:'phind.com',tool:'Phind',risk:'MEDIUM'},
-{domain:'cursor.com',tool:'Cursor',risk:'HIGH'},
-{domain:'github.com/features/copilot',tool:'GitHub Copilot',risk:'HIGH'},
-{domain:'replit.com',tool:'Replit AI',risk:'HIGH'},
-{domain:'codeium.com',tool:'Codeium',risk:'HIGH'},
-{domain:'tabnine.com',tool:'Tabnine',risk:'MEDIUM'},
-{domain:'sourcegraph.com/cody',tool:'Cody',risk:'HIGH'},
-{domain:'bolt.new',tool:'Bolt',risk:'HIGH'},
-{domain:'v0.dev',tool:'Vercel v0',risk:'HIGH'},
-{domain:'lovable.dev',tool:'Lovable',risk:'HIGH'},
-{domain:'make.com',tool:'Make AI Automation',risk:'MEDIUM'},
-{domain:'zapier.com/ai',tool:'Zapier AI',risk:'MEDIUM'},
-{domain:'agentgpt.reworkd.ai',tool:'AgentGPT',risk:'CRITICAL'},
-{domain:'autogpt.net',tool:'AutoGPT',risk:'CRITICAL'},
-{domain:'crew.ai',tool:'CrewAI',risk:'CRITICAL'},
-{domain:'langchain.com',tool:'LangChain',risk:'HIGH'},
-{domain:'llamaindex.ai',tool:'LlamaIndex',risk:'HIGH'},
-{domain:'cohere.com',tool:'Cohere',risk:'HIGH'},
-{domain:'together.ai',tool:'Together AI',risk:'HIGH'},
-{domain:'groq.com',tool:'Groq',risk:'HIGH'},
-{domain:'deepseek.com',tool:'DeepSeek',risk:'HIGH'},
-{domain:'qwen.ai',tool:'Qwen',risk:'HIGH'},
-{domain:'meta.ai',tool:'Meta AI',risk:'MEDIUM'},
-{domain:'character.ai',tool:'Character AI',risk:'MEDIUM'},
-{domain:'pi.ai',tool:'Pi AI',risk:'MEDIUM'},
-{domain:'fireflies.ai',tool:'Fireflies',risk:'MEDIUM'},
-{domain:'otter.ai',tool:'Otter AI',risk:'MEDIUM'}
-];
-
-function toggleLang(){
-currentLang=currentLang==='EN'?'PL':'EN';
-
-if(currentLang==='PL'){
-document.getElementById('topTitle').textContent='KulaGuard AI - MVP Investor Preview';
-document.getElementById('topSubtitle').textContent='Shadow AI visibility, parser logów i workflow AI governance dla infrastruktury regulowanej, OT/IT oraz zespołów enterprise security.';
-document.getElementById('sideSubtitle').textContent='AI governance i Shadow AI visibility dla organizacji regulowanych';
-document.getElementById('statusBox').innerHTML='Aktywna budowa MVP<br>Parser browser / M365 w demo<br>Cel pilotażu: 30-60 dni';
-document.getElementById('noticeBox').textContent='KulaGuard AI pokazuje skoncentrowaną ścieżkę MVP: wykrywanie niezarządzanego użycia AI z logów browser/proxy i Microsoft 365, generowanie raportów executive oraz walidację przez 1-2 kontrolowane pilotaże lub LOI w energetyce, transporcie albo sektorach regulowanych CEE.';
-document.getElementById('m1').textContent='Zmapowane narzędzia AI';
-document.getElementById('m2').textContent='Ryzyko Shadow AI';
-document.getElementById('m3').textContent='Widok gotowości NIS2';
-document.getElementById('m4').textContent='Widok kontroli AI Act';
-document.getElementById('m5').textContent='Ekspozycja finansowa';
-document.getElementById('m6').textContent='Parser MVP';
-document.getElementById('m7').textContent='Zakres telemetrii';
-document.getElementById('m8').textContent='Cel pilotażu';
-document.getElementById('h1').textContent='Katalog usług AI do detekcji w browser, SaaS, endpoint i M365 telemetry.';
-document.getElementById('h2').textContent='Klasyfikacja ryzyka dla nieautoryzowanych narzędzi AI, uploadów i agentów.';
-document.getElementById('h5').textContent='Konfigurowalny widok wpływu biznesowego dla naruszeń, audytu i compliance.';
-document.getElementById('h6').textContent='Client-side parser browser/M365 jest zawarty w tym demo do walidacji MVP.';
-document.getElementById('h7').textContent='Pierwszy zakres MVP: browser history, proxy exports, M365 audit logs i endpoint events.';
-document.getElementById('h8').textContent='Cel: kontrolowany pilot z autoryzowaną telemetrią i raportem executive.';
-}else{
-document.getElementById('topTitle').textContent='KulaGuard AI MVP Investor Preview';
-document.getElementById('topSubtitle').textContent='Shadow AI visibility, log parsing and AI governance workflow for regulated infrastructure, OT/IT and enterprise security teams.';
-document.getElementById('sideSubtitle').textContent='AI governance and Shadow AI visibility for regulated organizations';
-document.getElementById('statusBox').innerHTML='MVP build active<br>Browser / M365 parser included<br>Pilot validation target: 30-60 days';
-document.getElementById('noticeBox').textContent='KulaGuard AI presents a focused MVP path: detect unmanaged AI usage from browser/proxy and Microsoft 365 audit logs, generate executive risk reports, and validate the product through 1-2 controlled pilots or LOIs in energy, transport or regulated CEE enterprise environments.';
-document.getElementById('m1').textContent='AI Tools Mapped';
-document.getElementById('m2').textContent='Shadow AI Risk';
-document.getElementById('m3').textContent='NIS2 Readiness View';
-document.getElementById('m4').textContent='AI Act Control View';
-document.getElementById('m5').textContent='Financial Exposure';
-document.getElementById('m6').textContent='Parser MVP';
-document.getElementById('m7').textContent='Telemetry Scope';
-document.getElementById('m8').textContent='Pilot Objective';
-document.getElementById('h1').textContent='AI service catalogue for browser, SaaS, endpoint and M365 telemetry detection.';
-document.getElementById('h2').textContent='Risk classification for unauthorized AI tools, sensitive uploads and unmanaged agents.';
-document.getElementById('h5').textContent='Configurable business impact view for breach, audit and compliance exposure.';
-document.getElementById('h6').textContent='Client-side browser/M365 log parser included in this demo for MVP validation.';
-document.getElementById('h7').textContent='Initial MVP scope: browser history, proxy exports, M365 audit logs and endpoint events.';
-document.getElementById('h8').textContent='Target: controlled pilot with authorized telemetry and executive report output.';
-}
-}
-
-function showSection(id,button){
-document.querySelectorAll('.section').forEach(section=>section.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('.nav button').forEach(btn=>btn.classList.remove('active'));
-button.classList.add('active');
-}
-
-function backDashboard(){
-showSection('dashboard',document.querySelectorAll('.nav button')[0]);
-}
-
-function riskClass(risk){
-if(risk==='CRITICAL') return 'critical';
-if(risk==='HIGH') return 'high';
-if(risk==='MEDIUM') return 'medium';
-return 'low';
-}
-
-function parseLogs(){
-const rawOriginal=document.getElementById('logInput').value;
-const raw=rawOriginal.toLowerCase();
-const counts={};
-let fileUploads=0;
-let totalEvents=0;
-let riskScore=0;
-
-aiServices.forEach(service=>{
-const domain=service.domain.toLowerCase();
-const escaped=domain.replace(/[.*+?^${}()|[\]\]/g,'\$&');
-const re=new RegExp(escaped,'g');
-const matches=raw.match(re);
-if(matches && matches.length){
-counts[domain]={tool:service.tool,risk:service.risk,events:matches.length};
-totalEvents+=matches.length;
-if(service.risk==='CRITICAL') riskScore+=matches.length*25;
-else if(service.risk==='HIGH') riskScore+=matches.length*15;
-else if(service.risk==='MEDIUM') riskScore+=matches.length*8;
-else riskScore+=matches.length*3;
-}
-});
-
-fileUploads=(raw.match(/fileupload|upload|uploaded|attachment|\.pdf|\.docx|\.xlsx|\.csv|\.pptx|\.zip/g)||[]).length;
-riskScore+=fileUploads*20;
-riskScore=Math.min(100,riskScore);
-
-const table=document.getElementById('parserTable');
-table.innerHTML='<tr><th>Domain</th><th>Tool</th><th>Events</th><th>Risk</th></tr>';
-
-const domains=Object.keys(counts).sort((a,b)=>counts[b].events-counts[a].events);
-if(domains.length===0){
-document.getElementById('parserSummary').textContent='No mapped AI services detected. Upload or paste browser, proxy, DNS or M365 audit log lines containing AI tool domains.';
-return;
-}
-
-domains.forEach(domain=>{
-const item=counts[domain];
-let finalRisk=item.risk;
-if(fileUploads>0 && ['chat.openai.com','chatgpt.com','claude.ai','gemini.google.com','perplexity.ai'].includes(domain)) finalRisk='CRITICAL';
-const row=document.createElement('tr');
-row.innerHTML=`<td>${domain}</td><td>${item.tool}</td><td>${item.events}</td><td><span class="badge ${riskClass(finalRisk)}">${finalRisk}</span></td>`;
-table.appendChild(row);
-});
-
-const critical=domains.filter(d=>counts[d].risk==='CRITICAL').length;
-const riskLabel=riskScore>=75?'CRITICAL':riskScore>=50?'HIGH':riskScore>=25?'MEDIUM':'LOW';
-document.getElementById('parserSummary').innerHTML=`<b>Detection complete.</b><br>Detected <b>${totalEvents}</b> AI-related event(s) across <b>${domains.length}</b> mapped AI service(s). File/upload indicators: <b>${fileUploads}</b>. Critical-risk services detected: <b>${critical}</b>.<br><br><b>Risk score:</b> ${riskScore}/100 <span class="badge ${riskClass(riskLabel)}">${riskLabel}</span><br><br><b>Recommended output:</b> review ownership, sensitive departments, file uploads and policy approval status before pilot report export.`;
-}
-
-function handleFileUpload(event){
-const file=event.target.files[0];
-if(!file) return;
-const reader=new FileReader();
-reader.onload=function(e){
-document.getElementById('logInput').value=e.target.result;
-parseLogs();
-};
-reader.readAsText(file);
-}
-
-function loadSampleLogs(){
-document.getElementById('logInput').value=`2026-05-07T09:12:11Z,user1@company.com,Visited,chat.openai.com,Finance Team
-2026-05-07T09:18:44Z,user2@company.com,FileUpload,claude.ai,Legal Team,contract_draft.pdf
-2026-05-07T10:03:02Z,user3@company.com,Visited,copilot.microsoft.com,Operations
-2026-05-07T10:22:18Z,user4@company.com,Visited,gemini.google.com,Engineering
-2026-05-07T11:10:39Z,user5@company.com,Visited,perplexity.ai,Sales
-2026-05-07T11:40:01Z,user6@company.com,Visited,cursor.com,Engineering
-2026-05-07T12:05:20Z,user7@company.com,Visited,agentgpt.reworkd.ai,Automation Team`;
-parseLogs();
-}
-
-function generateReport(){
-const company=document.getElementById('companyName').value || 'Pilot Client Environment';
-const sector=document.getElementById('sector').value;
-const exposure=document.getElementById('exposure').value;
-const reduction=document.getElementById('reduction').value;
-const notes=document.getElementById('notes').value;
-
-const report=`KulaGuard AI - Executive AI Security MVP Report
+const aiServices=[
+{domain:'chat.openai.com',tool:'ChatGPT',category:'Generative AI',risk:'HIGH'},{domain:'chatgpt.com',tool:'ChatGPT',category:'Generative AI',risk:'HIGH'},{domain:'openai.com',tool:'OpenAI',category:'AI Platform',risk:'HIGH'},{domain:'claude.ai',tool:'Claude',category:'Generative AI',risk:'HIGH'},{domain:'anthropic.com',tool:'Anthropic',category:'AI Platform',risk:'HIGH'},{domain:'gemini.google.com',tool:'Gemini',category:'Generative AI',risk:'HIGH'},{domain:'bard.google.com',tool:'Gemini',category:'Generative AI',risk:'MEDIUM'},{domain:'copilot.microsoft.com',tool:'Microsoft Copilot',category:'Productivity AI',risk:'MEDIUM'},{domain:'bing.com/chat',tool:'Microsoft Copilot',category:'Productivity AI',risk:'MEDIUM'},{domain:'perplexity.ai',tool:'Perplexity',category:'AI Search',risk:'MEDIUM'},{domain:'poe.com',tool:'Poe',category:'AI Aggregator',risk:'HIGH'},{domain:'mistral.ai',tool:'Mistral AI',category:'AI Platform',risk:'HIGH'},{domain:'huggingface.co',tool:'Hugging Face',category:'AI Platform',risk:'HIGH'},{domain:'replicate.com',tool:'Replicate',category:'AI Platform',risk:'HIGH'},{domain:'midjourney.com',tool:'Midjourney',category:'Image AI',risk:'MEDIUM'},{domain:'stability.ai',tool:'Stability AI',category:'Image AI',risk:'MEDIUM'},{domain:'runwayml.com',tool:'Runway',category:'Video AI',risk:'MEDIUM'},{domain:'elevenlabs.io',tool:'ElevenLabs',category:'Voice AI',risk:'MEDIUM'},{domain:'synthesia.io',tool:'Synthesia',category:'Video AI',risk:'MEDIUM'},{domain:'jasper.ai',tool:'Jasper',category:'Marketing AI',risk:'MEDIUM'},{domain:'copy.ai',tool:'Copy.ai',category:'Marketing AI',risk:'MEDIUM'},{domain:'writesonic.com',tool:'Writesonic',category:'Marketing AI',risk:'MEDIUM'},{domain:'notion.so/ai',tool:'Notion AI',category:'AI Productivity',risk:'LOW'},{domain:'grammarly.com',tool:'Grammarly AI',category:'AI Productivity',risk:'LOW'},{domain:'deepl.com/write',tool:'DeepL Write',category:'AI Writing',risk:'LOW'},{domain:'quillbot.com',tool:'QuillBot',category:'AI Writing',risk:'LOW'},{domain:'you.com',tool:'You.com AI',category:'AI Search',risk:'MEDIUM'},{domain:'phind.com',tool:'Phind',category:'AI Search',risk:'MEDIUM'},{domain:'cursor.com',tool:'Cursor',category:'Coding AI',risk:'HIGH'},{domain:'github.com/features/copilot',tool:'GitHub Copilot',category:'Coding AI',risk:'HIGH'},{domain:'replit.com',tool:'Replit AI',category:'Coding AI',risk:'HIGH'},{domain:'codeium.com',tool:'Codeium',category:'Coding AI',risk:'HIGH'},{domain:'tabnine.com',tool:'Tabnine',category:'Coding AI',risk:'MEDIUM'},{domain:'sourcegraph.com/cody',tool:'Cody',category:'Coding AI',risk:'HIGH'},{domain:'bolt.new',tool:'Bolt',category:'Agentic Coding',risk:'HIGH'},{domain:'v0.dev',tool:'Vercel v0',category:'Agentic Coding',risk:'HIGH'},{domain:'lovable.dev',tool:'Lovable',category:'Agentic Coding',risk:'HIGH'},{domain:'make.com',tool:'Make AI Automation',category:'AI Automation',risk:'MEDIUM'},{domain:'zapier.com/ai',tool:'Zapier AI',category:'AI Automation',risk:'MEDIUM'},{domain:'agentgpt.reworkd.ai',tool:'AgentGPT',category:'AI Agent',risk:'CRITICAL'},{domain:'autogpt.net',tool:'AutoGPT',category:'AI Agent',risk:'CRITICAL'},{domain:'crew.ai',tool:'CrewAI',category:'AI Agent',risk:'CRITICAL'},{domain:'langchain.com',tool:'LangChain',category:'AI Framework',risk:'HIGH'},{domain:'llamaindex.ai',tool:'LlamaIndex',category:'AI Framework',risk:'HIGH'},{domain:'cohere.com',tool:'Cohere',category:'AI Platform',risk:'HIGH'},{domain:'together.ai',tool:'Together AI',category:'AI Platform',risk:'HIGH'},{domain:'groq.com',tool:'Groq',category:'AI Platform',risk:'HIGH'},{domain:'deepseek.com',tool:'DeepSeek',category:'AI Platform',risk:'HIGH'},{domain:'qwen.ai',tool:'Qwen',category:'AI Platform',risk:'HIGH'},{domain:'meta.ai',tool:'Meta AI',category:'Generative AI',risk:'MEDIUM'},{domain:'character.ai',tool:'Character AI',category:'Consumer AI',risk:'MEDIUM'},{domain:'pi.ai',tool:'Pi AI',category:'Consumer AI',risk:'MEDIUM'},{domain:'fireflies.ai',tool:'Fireflies',category:'Meeting AI',risk:'MEDIUM'},{domain:'otter.ai',tool:'Otter AI',category:'Meeting AI',risk:'MEDIUM'}];
+function setLang(lang){currentLang=lang;document.getElementById('plBtn').classList.toggle('active',lang==='PL');document.getElementById('enBtn').classList.toggle('active',lang==='EN');if(lang==='PL'){document.getElementById('topTitle').textContent='KulaGuard AI - MVP Investor Preview';document.getElementById('topSubtitle').textContent='AI governance i Shadow AI visibility dla infrastruktury regulowanej, OT/IT oraz zespołów enterprise security.';document.getElementById('sideSubtitle').textContent='AI governance i Shadow AI visibility dla organizacji regulowanych';}else{document.getElementById('topTitle').textContent='KulaGuard AI - MVP Investor Preview';document.getElementById('topSubtitle').textContent='AI governance and Shadow AI visibility for regulated infrastructure, OT/IT and enterprise security teams.';document.getElementById('sideSubtitle').textContent='AI governance and Shadow AI visibility for regulated organizations';}}
+function showSection(id,button){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');}
+function riskClass(r){return r==='CRITICAL'?'critical':r==='HIGH'?'high':r==='MEDIUM'?'medium':'low';}
+function countNeedle(text,needle){let count=0,pos=0;while((pos=text.indexOf(needle,pos))!==-1){count++;pos+=needle.length;}return count;}
+function extractUsers(raw){const emails=raw.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g)||[];return new Set(emails.map(e=>e.toLowerCase())).size;}
+function parseLogs(){const raw=document.getElementById('logInput').value || document.getElementById('manualInput')?.value || '';const lower=raw.toLowerCase();let rows=[],total=0,riskScore=0;const users=extractUsers(raw);const fileUploads=(lower.match(/fileupload|upload|uploaded|attachment|\.pdf|\.docx|\.xlsx|\.csv|\.pptx|\.zip/g)||[]).length;aiServices.forEach(s=>{const events=countNeedle(lower,s.domain.toLowerCase());if(events>0){let risk=s.risk;if(fileUploads>0&&['chat.openai.com','chatgpt.com','claude.ai','gemini.google.com','perplexity.ai'].includes(s.domain))risk='CRITICAL';rows.push({...s,events,risk});total+=events;riskScore+=events*(risk==='CRITICAL'?25:risk==='HIGH'?15:risk==='MEDIUM'?8:3);}});riskScore=Math.min(100,riskScore+fileUploads*20);renderResults(rows,total,users,riskScore,fileUploads);}
+function renderResults(rows,total,users,riskScore,fileUploads){const table=document.getElementById('parserTable');table.innerHTML='<tr><th>Tool / Service</th><th>Category</th><th>Risk Level</th><th>Detections</th><th>Users</th><th>Last Seen</th></tr>';if(rows.length===0){document.getElementById('parserSummary').innerHTML='No mapped AI services detected. Upload or paste logs containing AI service domains.';return;}rows.sort((a,b)=>b.events-a.events).forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${r.domain}</td><td>${r.category}</td><td><span class="badge ${riskClass(r.risk)}">${r.risk}</span></td><td>${r.events}</td><td>${users||'-'}</td><td>${new Date().toISOString().slice(0,16).replace('T',' ')}</td>`;table.appendChild(tr);});const riskLabel=riskScore>=75?'CRITICAL':riskScore>=50?'HIGH':riskScore>=25?'MEDIUM':'LOW';document.getElementById('parserSummary').innerHTML=`<b>Detection complete.</b> ${total} AI-related event(s) across ${rows.length} mapped service(s). Upload/file indicators: ${fileUploads}. <b>Risk score:</b> ${riskScore}/100 <span class="badge ${riskClass(riskLabel)}">${riskLabel}</span>`;document.getElementById('rTotal').textContent=total;document.getElementById('rTools').textContent=rows.length;document.getElementById('rUsers').textContent=users||'-';document.getElementById('rRisk').textContent=riskScore+' / 100';}
+function handleFileUpload(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{document.getElementById('logInput').value=ev.target.result;document.getElementById('manualInput')&&(document.getElementById('manualInput').value=ev.target.result);parseLogs();};reader.readAsText(file);}
+function copyManualAndParse(){const val=document.getElementById('manualInput').value;document.getElementById('logInput').value=val;parseLogs();document.getElementById('parserSummary2').innerHTML=document.getElementById('parserSummary').innerHTML;}
+function loadSampleLogs(type='browser'){const samples={browser:`2026-05-13 10:24,user1@company.com,Visited,chat.openai.com,Finance
+2026-05-13 09:58,user2@company.com,Visited,copilot.microsoft.com,Operations
+2026-05-13 09:31,user3@company.com,Visited,claude.ai,Legal
+2026-05-13 08:12,user4@company.com,Visited,bard.google.com,Engineering
+2026-05-13 07:45,user5@company.com,Visited,notion.so/ai,Sales`,m365:`2026-05-13T09:18:44Z,user2@company.com,FileUpload,claude.ai,Legal,contract_draft.pdf
+2026-05-13T10:03:02Z,user3@company.com,AppAccess,copilot.microsoft.com,Operations
+2026-05-13T10:22:18Z,user4@company.com,Visited,gemini.google.com,Engineering`,proxy:`2026-05-13 proxy allow user6@company.com cursor.com engineering
+2026-05-13 proxy allow user7@company.com agentgpt.reworkd.ai automation
+2026-05-13 proxy allow user8@company.com perplexity.ai sales`};document.getElementById('logInput').value=samples[type]||samples.browser;parseLogs();}
+const drop=document.getElementById('dropZone');if(drop){['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag');}));['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag');}));drop.addEventListener('drop',e=>{const file=e.dataTransfer.files[0];if(file){const reader=new FileReader();reader.onload=ev=>{document.getElementById('logInput').value=ev.target.result;parseLogs();};reader.readAsText(file);}});}
+function generateReport(){const company=document.getElementById('companyName').value||'Pilot Client Environment';const sector=document.getElementById('sector').value;const exposure=document.getElementById('exposure').value;const reduction=document.getElementById('reduction').value;const notes=document.getElementById('notes').value;const report=`KulaGuard AI - Executive AI Security MVP Report
 
 Organization: ${company}
 Sector: ${sector}
-Document status: MVP detection and pilot validation report
 
 Summary:
-KulaGuard AI is an AI governance and Shadow AI visibility platform designed to help regulated organizations identify unmanaged AI usage, policy gaps, risky AI behavior and executive-level remediation priorities.
+KulaGuard AI helps regulated organizations detect unmanaged AI usage across browser, proxy and Microsoft 365 telemetry, classify risk, and generate executive governance reports.
 
 MVP Capabilities:
-- Browser/proxy/Microsoft 365 log parsing for AI service domains.
+- Browser/proxy/Microsoft 365 log parsing.
 - Catalogue of 50+ mapped AI tools and services.
-- Risk classification for public AI access, unmanaged tools, upload indicators and AI agents.
-- Executive reporting workflow for AI governance, NIS2 readiness and AI Act control mapping.
-- Pilot validation target: 30-60 days with authorized telemetry.
-
-Pilot Findings Structure:
-- Shadow AI events identified across public AI tools, local models and AI agents.
-- Prompt and file-upload risk patterns classified for leakage and policy exposure.
-- NIS2 readiness view: example control score of 58%.
-- AI Act governance view: example control score of 64%.
-- Financial exposure: ${exposure}.
-- Risk reduction objective: ${reduction}.
+- Risk classification for public AI access, uploads, unmanaged tools and AI agents.
+- Executive reporting for AI governance, NIS2 readiness and AI Act control mapping.
 
 Business Risk:
-Uncontrolled AI usage may increase the probability of data leakage, regulatory gaps, audit weaknesses, unmanaged automation and AI-enabled cyber incidents.
+Uncontrolled AI usage may increase data leakage, audit gaps, unmanaged automation and AI-enabled cyber risk.
 
 Recommended Executive Actions:
-1. Approve a corporate AI Usage Policy.
-2. Create a complete AI asset register.
-3. Assign ownership to all AI tools, agents and local models.
-4. Define departments where public AI tools are restricted or require approval.
-5. Run a controlled Shadow AI assessment using approved browser/proxy or M365 telemetry.
-6. Build an evidence pack for NIS2 and AI governance review.
+1. Approve corporate AI Usage Policy.
+2. Create AI asset register.
+3. Assign ownership to AI tools and agents.
+4. Run controlled Shadow AI assessment.
+5. Build evidence pack for governance review.
+
+Financial Exposure: ${exposure}
+Risk Reduction Objective: ${reduction}
 
 Validation Plan:
-1. Run one controlled pilot using authorized telemetry.
-2. Produce one executive report and one case study.
-3. Request LOI, paid PoC or strategic partnership discussion after validated findings.
+Run one controlled pilot, produce one executive report and case study, then request LOI, paid PoC or strategic partnership discussion.
 
 Additional Notes:
-${notes}
-
-Conclusion:
-The next step is a controlled MVP pilot using real, authorized telemetry from one organization. The objective is to validate detection accuracy, executive reporting value and commercial use case within a 30-60 day window.`;
-
-document.getElementById('reportBox').textContent=report;
-return {company,sector,exposure,reduction,notes};
-}
-
-function copyReport(){
-const report=document.getElementById('reportBox').textContent;
-navigator.clipboard.writeText(report);
-alert('Report copied');
-}
-
-function exportPDF(){
-const data=generateReport();
-const { jsPDF }=window.jspdf;
-const doc=new jsPDF();
-
-doc.setFillColor(5,11,24);
-doc.rect(0,0,210,297,'F');
-
-doc.setFillColor(15,23,40);
-doc.roundedRect(12,12,186,32,4,4,'F');
-
-doc.setTextColor(244,201,93);
-doc.setFontSize(22);
-doc.setFont(undefined,'bold');
-doc.text('KulaGuard AI',20,26);
-
-doc.setTextColor(255,255,255);
-doc.setFontSize(11);
-doc.setFont(undefined,'normal');
-doc.text('Executive AI Security MVP Report | Pilot Validation',20,36);
-
-doc.setDrawColor(244,201,93);
-doc.line(12,50,198,50);
-
-let y=62;
-
-function sectionTitle(title){
-doc.setTextColor(244,201,93);
-doc.setFontSize(13);
-doc.setFont(undefined,'bold');
-doc.text(title,20,y);
-y+=8;
-}
-
-function bodyText(text){
-doc.setTextColor(220,230,255);
-doc.setFontSize(10);
-doc.setFont(undefined,'normal');
-const lines=doc.splitTextToSize(text,170);
-doc.text(lines,20,y);
-y+=lines.length*5+6;
-if(y>260){doc.addPage();doc.setFillColor(5,11,24);doc.rect(0,0,210,297,'F');y=24;}
-}
-
-function metric(label,value,x,yPos){
-doc.setFillColor(16,27,49);
-doc.roundedRect(x,yPos,52,24,3,3,'F');
-doc.setTextColor(142,166,202);
-doc.setFontSize(8);
-doc.text(label,x+4,yPos+8);
-doc.setTextColor(244,201,93);
-doc.setFontSize(14);
-doc.setFont(undefined,'bold');
-doc.text(value,x+4,yPos+18);
-}
-
-sectionTitle('Organization');
-bodyText(`Organization: ${data.company}\nSector: ${data.sector}\nStatus: MVP detection and pilot validation report`);
-
-metric('AI Tools','50+',20,y);
-metric('Pilot Goal','30-60d',78,y);
-metric('LOI Target','1-2',136,y);
-y+=36;
-
-sectionTitle('Executive Summary');
-bodyText('KulaGuard AI is an AI governance and Shadow AI visibility platform designed for regulated organizations, OT/IT environments and enterprise security teams. The MVP path focuses on browser/proxy/M365 log parsing and executive risk reporting.');
-
-sectionTitle('MVP Capabilities');
-bodyText(`- Browser/proxy/Microsoft 365 log parsing for AI service domains.
-- Catalogue of 50+ mapped AI tools and services.
-- Risk classification for public AI access, unmanaged tools, upload indicators and AI agents.
-- Executive reporting workflow for AI governance, NIS2 readiness and AI Act control mapping.
-- Pilot validation target: 30-60 days with authorized telemetry.`);
-
-sectionTitle('Recommended Executive Actions');
-bodyText(`1. Approve a corporate AI Usage Policy.
-2. Create a complete AI asset register.
-3. Assign ownership to all AI tools, agents and local models.
-4. Define departments where public AI tools are restricted or require approval.
-5. Run a controlled Shadow AI assessment using approved telemetry.
-6. Build an evidence pack for NIS2 and AI governance review.`);
-
-sectionTitle('Validation Plan');
-bodyText('Run one controlled pilot using authorized telemetry, produce one executive report and one case study, then request LOI, paid PoC or strategic partnership discussion after validated findings.');
-
-sectionTitle('Additional Notes');
-bodyText(data.notes);
-
-doc.setDrawColor(244,201,93);
-doc.line(12,278,198,278);
-doc.setFontSize(8);
-doc.setTextColor(140,160,190);
-doc.text('© 2026 KulaGuard AI | Confidential MVP Preview',20,286);
-
-doc.save('KulaGuard_AI_MVP_Report.pdf');
-}
-
-function blockTool(button){
-button.textContent='Contained';
-button.disabled=true;
-button.style.opacity='0.65';
-const row=button.closest('tr');
-row.children[1].textContent='Marked for remediation';
-row.children[2].innerHTML='<span class="badge low">CONTAINED</span>';
-}
+${notes}`;document.getElementById('reportBox').textContent=report;return{company,sector,exposure,reduction,notes,report};}
+function copyReport(){navigator.clipboard.writeText(document.getElementById('reportBox').textContent);alert('Report copied');}
+function exportPDF(){const data=generateReport();const{jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFillColor(5,11,24);doc.rect(0,0,210,297,'F');doc.setFillColor(15,23,40);doc.roundedRect(12,12,186,32,4,4,'F');doc.setTextColor(244,201,93);doc.setFontSize(22);doc.setFont(undefined,'bold');doc.text('KulaGuard AI',20,26);doc.setTextColor(255,255,255);doc.setFontSize(11);doc.text('Executive AI Security MVP Report | Pilot Validation',20,36);doc.setDrawColor(244,201,93);doc.line(12,50,198,50);let y=62;function body(t){doc.setTextColor(220,230,255);doc.setFontSize(10);const lines=doc.splitTextToSize(t,170);doc.text(lines,20,y);y+=lines.length*5+6;if(y>260){doc.addPage();doc.setFillColor(5,11,24);doc.rect(0,0,210,297,'F');y=24;}}body(data.report);doc.setDrawColor(244,201,93);doc.line(12,278,198,278);doc.setFontSize(8);doc.setTextColor(140,160,190);doc.text('© 2026 KulaGuard AI | Confidential MVP Preview',20,286);doc.save('KulaGuard_AI_MVP_Report.pdf');}
+function blockTool(button){button.textContent='Contained';button.disabled=true;button.style.opacity='0.65';const row=button.closest('tr');row.children[1].textContent='Marked for remediation';row.children[2].innerHTML='<span class="badge low">CONTAINED</span>';}
+window.addEventListener('load',()=>loadSampleLogs('browser'));
 </script>
-
 </body>
 </html>
